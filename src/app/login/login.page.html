@@ -1,35 +1,37 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Iniciar sesión</ion-title>
+    <ion-title>Iniciar Sesion</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="content-wrapper">
-    <!-- Imagen en la parte superior -->
-    <img src="assets/img/login-icon.png" alt="Icono de inicio" class="login-icon" />
+    <img src="./assets/img/FlyParkLogo.png" alt="FlyPark" class="login-icon" />
+    
+    <h2 style="color: white;">FlyPark</h2>
 
     <ion-item>
-      <ion-label position="floating">Usuario</ion-label>
+      <ion-icon slot="start" name="mail-outline"></ion-icon>
+      <ion-label position="floating">Correo</ion-label>
       <ion-input [(ngModel)]="username" type="text" required></ion-input>
     </ion-item>
 
     <ion-item>
+      <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
       <ion-label position="floating">Contraseña</ion-label>
       <ion-input [(ngModel)]="password" [type]="passwordType" required></ion-input>
       <ion-icon
         slot="end"
         [name]="passwordType === 'password' ? 'eye-off' : 'eye'"
         (click)="togglePassword()"
-        style="cursor: pointer;"
       ></ion-icon>
     </ion-item>
 
-    <ion-button expand="full" (click)="login()">Iniciar sesión</ion-button>
-    <ion-button expand="full" (click)="register()">Registrarse</ion-button>
+    <p style="color: #ccc; font-size: 0.9rem; text-align: right; width: 90%; max-width: 400px; cursor: pointer;">
+      Olvidé mi contraseña
+    </p>
 
-    <ion-text color="danger" *ngIf="errorMessage">
-      <p>{{ errorMessage }}</p>
-    </ion-text>
+    <ion-button expand="full" (click)="login()">Iniciar sesión <ion-icon name="log-in-outline"></ion-icon></ion-button>
+    <ion-button expand="full" (click)="register()">Crear usuario <ion-icon name="person-add-outline"></ion-icon></ion-button>
   </div>
 </ion-content>
