@@ -6,9 +6,14 @@ ion-content {
   flex-direction: column;
   height: 100%;
 }
+ion-toolbar{
+  --background: #800000;
+  --color: #fff;
+}
 
 ion-header {
   background-color: #800000;
+  color:  #800000 ;
   padding: 10px;
 }
 
@@ -59,8 +64,8 @@ ion-item {
 ion-icon {
   font-size: 1.2rem;
   color: #ccc;
-  margin-left: -5px; /* Mueve solo el icono hacia la izquierda */
-  position: relative; /* Asegura que el desplazamiento solo afecte al icono */
+  margin-left: -5px; 
+  position: relative; 
 }
 
 ion-label {
@@ -80,14 +85,17 @@ ion-input {
 ion-item ion-icon[slot="end"] {
   margin-right: 8px;
 }
+ion-button::part(native) {
+  border-radius: 30px;
+}
 
 ion-button {
   width: 90%;
   max-width: 350px;
   font-size: 1rem;
-  border-radius: 5px;
+  --border-radius: 20px;
   margin-top: 8px;
-  padding: 10px;
+  
 }
 
 ion-button:first-of-type {
@@ -98,6 +106,12 @@ ion-button:first-of-type {
 ion-button:last-of-type {
   --background: #990000;
   --color: #fff;
+}
+ion-button ion-icon[slot="start"] {
+  margin-right: 10px; /* Asegura la separación */
+}
+ion-button ion-icon[slot="end"] {
+  margin-left: 10px;
 }
 
 p {

@@ -42,4 +42,8 @@ export class RegisterPage implements OnInit {
   isValidForm() {
     return this.user.name && this.user.email && this.user.phone && this.user.password;
   }
+
+  login() {
+    this.router.navigate(['/login']);
+  }
 }

@@ -1,35 +1,46 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Register</ion-title>
-  </ion-toolbar>
+<ion-header>
+  <div class="toolbar-container">
+    <ion-toolbar>
+      <ion-title>Registrarse</ion-title>
+    </ion-toolbar>
+  </div>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Register</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="content-wrapper">
+    <img src="./assets/img/FlyParkLogo.png" alt="FlyPark" class="login-icon" />
 
-  <ion-item>
-    <ion-label position="floating">Name</ion-label>
-    <ion-input type="text" [(ngModel)]="user.name" name="name" required></ion-input>
-  </ion-item>
+    <h2 style="color: white;">FlyPark</h2>
 
-  <ion-item>
-    <ion-label position="floating">Email</ion-label>
-    <ion-input type="email" [(ngModel)]="user.email" name="email" required></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input type="text" [(ngModel)]="user.name" name="name" required></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label position="floating">Phone</ion-label>
-    <ion-input type="tel" [(ngModel)]="user.phone" name="phone" required></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="email" [(ngModel)]="user.email" name="email" required></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label position="floating">Password</ion-label>
-    <ion-input type="password" [(ngModel)]="user.password" name="password" required></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label position="floating">Teléfono</ion-label>
+      <ion-input type="tel" [(ngModel)]="user.phone" name="phone" required></ion-input>
+    </ion-item>
 
-  <ion-button expand="full" (click)="registerUser()">Register</ion-button>
+    <ion-item>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input type="password" [(ngModel)]="user.password" name="password" required></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" (click)="registerUser()">
+      <ion-icon slot="end" name="person-add-outline"></ion-icon>
+      Registrarse
+    </ion-button>
+
+    <ion-button expand="full" (click)="login()">
+      <ion-icon slot="end" name="log-in-outline"></ion-icon>
+      Iniciar sesión
+    </ion-button>
+
+  </div>
 </ion-content>

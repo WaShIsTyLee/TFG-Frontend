@@ -1,8 +1,11 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Iniciar Sesion</ion-title>
-  </ion-toolbar>
+  <div class="toolbar-container">
+    <ion-toolbar>
+      <ion-title>Iniciar Sesión</ion-title>
+    </ion-toolbar>
+  </div>
 </ion-header>
+
 
 <ion-content>
   <div class="content-wrapper">
@@ -31,7 +34,15 @@
       Olvidé mi contraseña
     </p>
 
-    <ion-button expand="full" (click)="login()">Iniciar sesión <ion-icon name="log-in-outline"></ion-icon></ion-button>
-    <ion-button expand="full" (click)="register()">Crear usuario <ion-icon name="person-add-outline"></ion-icon></ion-button>
+<ion-button expand="full" (click)="login()">
+  <ion-icon slot="end" name="log-in-outline"></ion-icon>
+  Iniciar sesión
+</ion-button>
+
+<ion-button expand="full" (click)="register()">
+  <ion-icon slot="end" name="person-add-outline"></ion-icon>
+  Registrarse
+</ion-button>
+
   </div>
 </ion-content>

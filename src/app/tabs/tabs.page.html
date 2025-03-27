@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Bienvenido, {{ user?.name || 'Invitado' }}  
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+</ion-content>
+
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Inicio</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="parking">
+      <ion-icon name="car"></ion-icon>
+      <ion-label>Parking</ion-label>
+    </ion-tab-button>
+    <!-- Botón de cerrar sesión -->
+    <ion-tab-button tab="location" (click)="logOut()">
+      <ion-icon name="log-out"></ion-icon>
+      <ion-label>Cerrar sesión</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

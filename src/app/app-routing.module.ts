@@ -6,26 +6,14 @@ import { ParkingPage } from './parking/parking.page';
 import { RegisterPage } from './register/register.page';
 
 const routes: Routes = [
-  {
-    path: 'login',
-    component: LoginPage,
-  },
-  {
-    path: 'register',
-    component: RegisterPage ,
-  },
-  {
-    path: 'home',
-    component: HomePage,
-  },
-  {
-    path: 'parking',
-    component: ParkingPage,  
-  },
-  {
-    path: '',
-    redirectTo: '/login',
-    pathMatch: 'full',
+  { path: 'login', component: LoginPage },
+  { path: 'register', component: RegisterPage },
+  { path: 'home', component: HomePage },
+  { path: 'parking', component: ParkingPage },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { 
+    path: 'tabs', 
+    loadComponent: () => import('./tabs/tabs.page').then(m => m.TabsPage) 
   },
 ];
 
