@@ -1,0 +1,7 @@
+{
+  "name": "flypark",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
