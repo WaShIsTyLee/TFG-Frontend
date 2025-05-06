@@ -21,20 +21,13 @@ import { IonicModule } from '@ionic/angular';
     </ion-header>
 
     <ion-content>
-      <ion-list *ngIf="plazas && plazas.length > 0; else sinPlazas">
-        <ion-item *ngFor="let plaza of plazas">
-          <ion-label>
-            <h3>Plaza {{ plaza.numeroPlaza }}</h3>
-            <p>Parking: {{ plaza.nombreParking || 'Cargando...' }}</p>
-            <p>Estado: {{ plaza.estado }}</p>
-            <p>Entrada: {{ fechaEntrada | date: 'dd/MM/yyyy HH:mm' }}</p>
-            <p>Salida: {{ fechaSalida | date: 'dd/MM/yyyy HH:mm' }}</p>
-          </ion-label>
-          <ion-button slot="end" color="danger" size="small" (click)="confirmarReserva(plaza)">
-            Reservar
-          </ion-button>
-        </ion-item>
-      </ion-list>
+      <div *ngIf="plazas && plazas.length > 0; else sinPlazas" class="parking-grid">
+        <div class="row" *ngFor="let row of filas">
+          <div *ngFor="let plaza of row" class="plaza disponible" (click)="confirmarReserva(plaza)">
+            <span>{{ plaza.numeroPlaza }}</span>
+          </div>
+        </div>
+      </div>
 
       <ng-template #sinPlazas>
         <ion-text color="medium">
@@ -51,6 +44,7 @@ export class PlazasModalComponent implements OnInit {
   @Input() fechaSalida!: string;
 
   idUsuario!: number;
+  filas: any[] = []; // Para organizar las plazas en filas y columnas.
 
   constructor(
     private modalCtrl: ModalController,
@@ -72,37 +66,32 @@ export class PlazasModalComponent implements OnInit {
         plaza.nombreParking = parking.nombre;
       });
     });
+
+    this.organizarPlazas();
+  }
+
+  organizarPlazas() {
+    const plazasPorFila = 5; // Número de plazas por fila
+    this.filas = [];
+
+    // Organiza las plazas en filas
+    let filaActual: any[] = [];
+    this.plazas.forEach((plaza, index) => {
+      filaActual.push(plaza);
+      if (filaActual.length === plazasPorFila) {
+        this.filas.push(filaActual);
+        filaActual = [];
+      }
+    });
+
+    // Si quedan plazas sin llenar una fila completa, agrega la última fila
+    if (filaActual.length > 0) {
+      this.filas.push(filaActual);
+    }
   }
 
   cerrarModal() {
     this.modalCtrl.dismiss();
-  }
-
-  private formatFecha(fechaStr: string): string {
-    return fechaStr;
-  }
-
-  async validarFechas() {
-    const hoy = new Date();
-    const fechaEntrada = new Date(this.fechaEntrada);
-    const fechaSalida = new Date(this.fechaSalida);
-
-    if (fechaEntrada < hoy) {
-      await this.mostrarAlerta('Fecha inválida', 'La fecha de entrada no puede ser anterior al día de hoy.');
-      return false;
-    }
-
-    if (fechaEntrada >= fechaSalida) {
-      await this.mostrarAlerta('Fechas inválidas', 'La fecha de entrada debe ser anterior a la de salida.');
-      return false;
-    }
-
-    return true;
-  }
-
-  async onDateChange() {
-    const fechasValidas = await this.validarFechas();
-    if (!fechasValidas) return;
   }
 
   async confirmarReserva(plaza: any) {
@@ -132,7 +121,7 @@ export class PlazasModalComponent implements OnInit {
           text: 'Confirmar',
           handler: async (data) => {
             const matricula = data.matricula?.trim().toUpperCase();
-            const regexMatricula = /^[A-Z0-9]{1,4}[ -]?[A-Z0-9]{1,4}$/;
+            const regexMatricula = /^([A-Z0-9]{1,7})([ -]?[A-Z0-9]{1,7})?$/; // Expresión regular para validar matrícula
 
             if (!matricula) {
               await this.mostrarAlerta('Campo requerido', 'Debes introducir una matrícula.');
@@ -187,5 +176,23 @@ export class PlazasModalComponent implements OnInit {
       buttons: ['OK']
     });
     await errorAlert.present();
+  }
+
+  async validarFechas() {
+    const hoy = new Date();
+    const fechaEntrada = new Date(this.fechaEntrada);
+    const fechaSalida = new Date(this.fechaSalida);
+
+    if (fechaEntrada < hoy) {
+      await this.mostrarAlerta('Fecha inválida', 'La fecha de entrada no puede ser anterior al día de hoy.');
+      return false;
+    }
+
+    if (fechaEntrada >= fechaSalida) {
+      await this.mostrarAlerta('Fechas inválidas', 'La fecha de entrada debe ser anterior a la de salida.');
+      return false;
+    }
+
+    return true;
   }
 }

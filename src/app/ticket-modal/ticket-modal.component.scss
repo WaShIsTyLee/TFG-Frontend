@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
+
+$topbg: #ffcc05;
+$bottombg: #fff;
+$font: "Open Sans", sans-serif;
+$grey: #6c6c6c;
+
+body, p, h1 {
+	margin: 0;
+	padding: 0;
+	font-family: $font;
+	color: #000;
+}
+
+.container {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background: #e0e2e8;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.ticket {
+	width: 100%;
+	height: 100%;
+	border-radius: 0;
+	box-shadow: none;
+	overflow: hidden;
+	background: #fff;
+	display: flex;
+	flex-direction: column;
+}
+
+.airline {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.top {
+	flex: 0 0 35%;
+	background: $topbg;
+	position: relative;
+	text-align: center;
+	color: #000;
+
+	h1 {
+		text-transform: uppercase;
+		font-size: 16px;
+		margin-top: 1rem;
+	}
+
+	.big {
+		margin-top: 2rem;
+		.from {
+			font-size: 2.2rem;
+			font-weight: 700;
+			color: $topbg;
+			text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+		}
+		.to {
+			margin-top: 0.5rem;
+			font-size: 1.5rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			i {
+				margin-right: 8px;
+			}
+		}
+	}
+
+	.top--side {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		text-align: right;
+		font-size: 0.8rem;
+
+		ion-icon {
+			font-size: 1.2rem;
+			margin-bottom: 5px;
+		}
+	}
+}
+
+.bottom {
+	flex: 1;
+	padding: 1rem;
+	background: $bottombg;
+	color: #000;
+
+	.column {
+		display: flex;
+		flex-direction: column;
+		gap: 1.2rem;
+	}
+
+	.row {
+		display: flex;
+		justify-content: space-between;
+		gap: 0.5rem;
+		font-size: 0.9rem;
+
+		p {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
+
+			span {
+				font-size: 0.8rem;
+				color: $grey;
+			}
+		}
+	}
+
+	.bar--code {
+        margin: 2rem auto 0 auto;
+        margin-left: 12rem;
+        height: 50px;
+        width: 90%;
+        position: relative;
+    
+        &::after, &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            height: 100%;
+            background: #000;
+        }
+    
+        &::after {
+            width: 6px;
+            left: 0;
+            box-shadow: 10px 0 #000, 30px 0 #000, 40px 0 #000, 67px 0 #000, 90px 0 #000,
+                100px 0 #000, 180px 0 #000, 165px 0 #000, 200px 0 #000, 210px 0 #000,
+                135px 0 #000, 120px 0 #000;
+        }
+    
+        &::before {
+            width: 3px;
+            left: 11px;
+            box-shadow: 12px 0 #000, -4px 0 #000, 45px 0 #000, 65px 0 #000, 72px 0 #000,
+                78px 0 #000, 97px 0 #000, 150px 0 #000, 165px 0 #000, 180px 0 #000,
+                135px 0 #000, 120px 0 #000;
+        }
+    }
+    
+}

@@ -2,15 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { ReservaService } from '../services/reserva.service';
 import { UserService } from '../services/user.service';
 import { AlertController } from '@ionic/angular';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
+import { TicketModalComponent } from '../ticket-modal/ticket-modal.component';
 
 @Component({
   imports: [CommonModule, IonicModule, FormsModule],
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
+  providers: [DatePipe]
 })
 export class Tab1Page implements OnInit {
   reservasActivas: any[] = [];
@@ -19,14 +22,27 @@ export class Tab1Page implements OnInit {
   constructor(
     private reservaService: ReservaService,
     private userService: UserService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private datePipe: DatePipe,
+    private modalController: ModalController // ← AÑADIDO
   ) {}
+  
 
   ngOnInit() {}
 
   ionViewWillEnter() {
     this.cargarReservas();
   }
+
+  async mostrarTicket(reserva: any) {
+    const modal = await this.modalController.create({
+      component: TicketModalComponent,
+      componentProps: { reserva },
+    });
+  
+    await modal.present();
+  }
+  
 
   cargarReservas() {
     this.userService.getUser().subscribe((user) => {
@@ -83,5 +99,9 @@ export class Tab1Page implements OnInit {
       this.reservasTotales = this.reservasTotales.filter((r) => r.idReserva !== idReserva);
       this.reservasActivas = this.reservasActivas.filter((r) => r.idReserva !== idReserva);
     });
+  }
+
+  formatFecha(fecha: string | Date): string {
+    return this.datePipe.transform(fecha, "d 'de' MMMM 'de' y, HH:mm", 'es-ES') || '';
   }
 }

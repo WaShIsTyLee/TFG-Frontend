@@ -1,0 +1,36 @@
+.parking-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .plaza {
+    width: 50px;
+    height: 50px;
+    background-color: #ddd;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .plaza.disponible {
+    background-color: #5bc0de; /* Azul para disponible */
+    color: white;
+    font-weight: bold;
+  }
+  
+  .plaza:hover {
+    background-color: #f0ad4e; /* Amarillo al pasar el ratón */
+  }
+  

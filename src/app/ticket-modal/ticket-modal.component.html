@@ -1,0 +1,48 @@
+<div class="container">
+
+  <div class="ticket airline">
+    <div class="top">
+      <h1>Ticket Parking</h1>
+      
+      <!-- Letra P grande -->
+
+      <div class="big">
+        <p class="from">{{ reserva?.parking?.nombre || 'Parking' }}</p>
+        <p class="to"><i class="fas fa-arrow-right"></i> {{ reserva?.plaza?.numeroPlaza || 'Plaza' }}</p>
+      </div>
+
+      <div class="top--side">
+        <ion-icon name="car-outline"></ion-icon>
+        <p>Entrada</p>
+        <p>Salida</p>
+      </div>
+    </div>
+
+    <div class="bottom">
+      <div class="column">
+        <div class="row row-1">
+          <p><span>Parking</span> {{ reserva?.parking?.nombre }}</p>
+          <p class="row--right"><span>Plaza</span> {{ reserva?.plaza?.numeroPlaza }}</p>
+        </div>
+
+        <div class="row row-2">
+          <p><span>Entrada</span> {{ reserva?.diaEntrada | date:'short' }}</p>
+          <p class="row--center"><span>Salida</span> {{ reserva?.diaSalida | date:'short' }}</p>
+          <p class="row--right"><span>Duración</span> {{ duracionHoras || 'No disponible' }}</p>
+        </div>
+
+        <div class="row row-3">
+          <p><span>Matrícula</span> {{ reserva?.matricula || 'No disponible' }}</p>
+          <p class="row--center">
+            <span>Usuario</span> {{ usuarioActual?.name || 'Cliente' }}
+          </p>
+          
+        </div>
+        
+      </div>
+
+      <div class="bar--code"></div>
+    </div>
+  </div>
+
+</div>

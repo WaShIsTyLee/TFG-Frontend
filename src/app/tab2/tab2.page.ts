@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { PlazasModalComponent } from '../plazas-modal/plazas-modal.component';
 
+
 interface Parking {
   idParking: number;
   nombre: string;
@@ -16,6 +17,7 @@ interface Plaza {
   idPlaza: number;
   idParking: number;
   numeroPlaza: string;
+  
 }
 
 @Component({
