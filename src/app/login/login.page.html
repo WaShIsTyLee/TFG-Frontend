@@ -1,0 +1,48 @@
+<ion-header>
+  <div class="toolbar-container">
+    <ion-toolbar>
+      <ion-title>Iniciar Sesión</ion-title>
+    </ion-toolbar>
+  </div>
+</ion-header>
+
+
+<ion-content>
+  <div class="content-wrapper">
+    <img src="./assets/img/FlyParkLogo.png" alt="FlyPark" class="login-icon" />
+    
+    <h2 style="color: white;">FlyPark</h2>
+
+    <ion-item>
+      <ion-icon slot="start" name="mail-outline"></ion-icon>
+      <ion-label position="floating">Correo</ion-label>
+      <ion-input [(ngModel)]="username" type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input [(ngModel)]="password" [type]="passwordType" required></ion-input>
+      <ion-icon
+        slot="end"
+        [name]="passwordType === 'password' ? 'eye-off' : 'eye'"
+        (click)="togglePassword()"
+      ></ion-icon>
+    </ion-item>
+
+    <p style="color: #ccc; font-size: 0.9rem; text-align: right; width: 90%; max-width: 400px; cursor: pointer;">
+      Olvidé mi contraseña
+    </p>
+
+<ion-button expand="full" (click)="login()">
+  <ion-icon slot="end" name="log-in-outline"></ion-icon>
+  Iniciar sesión
+</ion-button>
+
+<ion-button expand="full" (click)="register()">
+  <ion-icon slot="end" name="person-add-outline"></ion-icon>
+  Registrarse
+</ion-button>
+
+  </div>
+</ion-content>

@@ -1,17 +1,69 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-content>
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title>Mis Reservas</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <!-- Reservas activas -->
+  <h2>Reservas Activas</h2>
+  <ion-list *ngIf="reservasActivas.length > 0; else sinReservasActivas">
+    <ion-item *ngFor="let reserva of reservasActivas">
+      <ion-label>
+        <h3>Parking: {{ reserva.parking?.nombre }}</h3>
+        <p>Plaza: {{ reserva.plaza?.numeroPlaza }}</p>
+        <p>Matricula: {{ reserva.matricula || 'No disponible' }}</p> <!-- Aquí agregamos la matrícula -->
+        <p>Fecha de Entrada: {{ reserva.diaEntrada | date: 'medium' }}</p>
+        <p>Fecha de Salida: {{ reserva.diaSalida | date: 'medium' }}</p>
+      </ion-label>
+
+      <!-- Botón eliminar -->
+      <ion-button
+        fill="clear"
+        color="danger"
+        slot="end"
+        (click)="confirmarEliminar(reserva)"
+      >
+        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <!-- Mensaje cuando no hay reservas activas -->
+  <ng-template #sinReservasActivas>
+    <ion-text color="medium">
+      <p class="ion-padding">No tienes reservas activas.</p>
+    </ion-text>
+  </ng-template>
+
+  <!-- Reservas Totales -->
+  <h2>Reservas Totales</h2>
+  <ion-list *ngIf="reservasTotales.length > 0; else sinReservasTotales">
+    <ion-item *ngFor="let reserva of reservasTotales">
+      <ion-label>
+        <h3>Parking: {{ reserva.parking?.nombre }}</h3>
+        <p>Plaza: {{ reserva.plaza?.numeroPlaza }}</p>
+        <p>Matricula: {{ reserva.matricula || 'No disponible' }}</p> <!-- Aquí agregamos la matrícula -->
+        <p>Fecha de Entrada: {{ reserva.diaEntrada | date: 'medium' }}</p>
+        <p>Fecha de Salida: {{ reserva.diaSalida | date: 'medium' }}</p>
+      </ion-label>
+
+      <!-- Botón eliminar -->
+      <ion-button
+        fill="clear"
+        color="danger"
+        slot="end"
+        (click)="confirmarEliminar(reserva)"
+      >
+        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <!-- Mensaje cuando no hay reservas totales -->
+  <ng-template #sinReservasTotales>
+    <ion-text color="medium">
+      <p class="ion-padding">No tienes reservas totales.</p>
+    </ion-text>
+  </ng-template>
 </ion-content>
