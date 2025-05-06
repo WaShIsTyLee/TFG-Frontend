@@ -63,6 +63,9 @@ export class LoginPage implements OnInit {
     );
     
   }
+  register() {
+    this.router.navigate(['/register']); // 👈 Navega a la página de registro
+  }
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
@@ -73,7 +76,5 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
-  register() {
-    console.log('Registrarse con Username:', this.username, 'Password:', this.password);
-  }
+  
 }

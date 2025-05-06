@@ -1,9 +1,41 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Logout</ion-title>
+    <ion-title>Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
+
+  <div *ngIf="usuarioActual">
+    <div class="perfil-container" style="text-align: center;">
+      <img 
+        *ngIf="fotoPerfil; else sinFoto" 
+        [src]="fotoPerfil" 
+        alt="Foto de perfil" 
+        class="foto-perfil" 
+        style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 2px solid #ccc;" 
+      />
+      <ng-template #sinFoto>
+        <p><em>Sin foto de perfil</em></p>
+      </ng-template>
+    </div>
+
+    <ion-list>
+      <ion-item>
+        <ion-label><strong>Nombre:</strong></ion-label>
+        <ion-text>{{ usuarioActual.name }}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label><strong>Email:</strong></ion-label>
+        <ion-text>{{ usuarioActual.email }}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label><strong>Teléfono:</strong></ion-label>
+        <ion-text>{{ usuarioActual.phone }}</ion-text>
+      </ion-item>
+    </ion-list>
+  </div>
+
   <ion-button expand="full" color="danger" (click)="logout()">Cerrar sesión</ion-button>
+
 </ion-content>
