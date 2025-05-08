@@ -151,5 +151,10 @@ body, p, h1 {
                 135px 0 #000, 120px 0 #000;
         }
     }
-    
+    .qr-container {
+		display: flex;
+		justify-content: center;
+		margin-top: 20px;
+	  }
+	  
 }

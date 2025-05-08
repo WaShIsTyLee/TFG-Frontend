@@ -1,9 +1,9 @@
-import type { CapacitorConfig } from '@capacitor/cli';
+import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'flypark',
-  webDir: 'www'
+  appId: 'com.flypark.app',
+  appName: 'FlyPark',
+  webDir: 'dist/flypark',  // ← asegúrate que este path sea correcto
 };
 
 export default config;

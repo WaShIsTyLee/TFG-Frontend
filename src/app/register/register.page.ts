@@ -41,33 +41,48 @@ export class RegisterPage {
     }
   }
 
-  async registrar() {
-    const usuario = {
-      name: this.nombre,
-      email: this.email,
-      phone: this.telefono,
-      password: this.password,
-      foto: this.fotoBase64
-    };
-
-    this.http.post('http://localhost:8080/usuario/register', usuario).subscribe({
-      next: async () => {
-        const alert = await this.alertController.create({
-          header: 'Registro exitoso',
-          message: 'Ya puedes iniciar sesión',
-          buttons: ['OK']
-        });
-        await alert.present();
-        this.router.navigateByUrl('/login');
-      },
-      error: async (err) => {
-        const alert = await this.alertController.create({
-          header: 'Error',
-          message: err.error || 'Error al registrar el usuario',
-          buttons: ['OK']
-        });
-        await alert.present();
-      }
-    });
+  irALogin() {
+    this.router.navigateByUrl('/login');
   }
+  
+async registrar() {
+  if (!this.nombre || !this.email || !this.telefono || !this.password) {
+    const alert = await this.alertController.create({
+      header: 'Campos incompletos',
+      message: 'Por favor, completa todos los campos obligatorios.',
+      buttons: ['OK']
+    });
+    await alert.present();
+    return;
+  }
+
+  const usuario = {
+    name: this.nombre,
+    email: this.email,
+    phone: this.telefono,
+    password: this.password,
+    foto: this.fotoBase64
+  };
+
+  this.http.post('http://localhost:8080/usuario/register', usuario).subscribe({
+    next: async () => {
+      const alert = await this.alertController.create({
+        header: 'Registro exitoso',
+        message: 'Ya puedes iniciar sesión',
+        buttons: ['OK']
+      });
+      await alert.present();
+      this.router.navigateByUrl('/login');
+    },
+    error: async (err) => {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: err.error || 'Error al registrar el usuario',
+        buttons: ['OK']
+      });
+      await alert.present();
+    }
+  });
+}
+
 }

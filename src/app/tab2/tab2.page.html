@@ -5,13 +5,31 @@
 </ion-header>
 
 <ion-content>
-  <!-- Mostrar lista de Parkings -->
-  <ion-list>
-    <ion-item *ngFor="let parking of parkings" (click)="loadPlazas(parking.idParking)">
-      <ion-label>
-        <h2>{{ parking.nombre }}</h2>
-        <p>{{ parking.ubicacion }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+  <ion-grid>
+    <ion-row>
+      <ng-container *ngFor="let parking of parkings">
+        <ion-col size="4" size-md="4" size-lg="4">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>{{ parking.nombre }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>{{ parking.ubicacion }}</p>
+              <ion-button expand="block" color="primary" (click)="toggleMapa(parking)">
+                {{ parking.isMapaVisible ? 'Ocultar mapa' : 'Ver mapa' }}
+              </ion-button>
+              <!-- Botón de reservar -->
+              <ion-button expand="block" color="success" (click)="loadPlazas(parking.idParking)">
+                Reservar
+              </ion-button>
+              <div *ngIf="parking.isMapaVisible"
+                   id="mapa-{{ parking.idParking }}"
+                   style="height: 200px; width: 100%; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px;">
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ng-container>
+    </ion-row>
+  </ion-grid>
 </ion-content>

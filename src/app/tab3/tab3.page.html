@@ -22,20 +22,32 @@
 
     <ion-list>
       <ion-item>
-        <ion-label><strong>Nombre:</strong></ion-label>
-        <ion-text>{{ usuarioActual.name }}</ion-text>
+        <ion-label position="stacked"><strong>Nombre:</strong></ion-label>
+        <ion-input [(ngModel)]="usuarioActual.name" placeholder="Introduce tu nombre"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label><strong>Email:</strong></ion-label>
-        <ion-text>{{ usuarioActual.email }}</ion-text>
+        <ion-label position="stacked"><strong>Email:</strong></ion-label>
+        <ion-input [(ngModel)]="usuarioActual.email" placeholder="Introduce tu email"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label><strong>Teléfono:</strong></ion-label>
-        <ion-text>{{ usuarioActual.phone }}</ion-text>
+        <ion-label position="stacked"><strong>Teléfono:</strong></ion-label>
+        <ion-input [(ngModel)]="usuarioActual.phone" placeholder="Introduce tu teléfono"></ion-input>
       </ion-item>
     </ion-list>
-  </div>
 
-  <ion-button expand="full" color="danger" (click)="logout()">Cerrar sesión</ion-button>
+    <div class="button-container">
+      <ion-button expand="full" color="primary" (click)="takeProfilePhoto()">
+        Cambiar foto
+      </ion-button>
+
+      <ion-button expand="full" color="success" (click)="updateUserProfile()">
+        Guardar cambios
+      </ion-button>
+
+      <ion-button expand="full" color="danger" (click)="logout()">
+        Cerrar sesión
+      </ion-button>
+    </div>
+  </div>
 
 </ion-content>

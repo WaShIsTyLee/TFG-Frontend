@@ -4,42 +4,53 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <form (ngSubmit)="registrar()">
-    <ion-item>
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input type="text" [(ngModel)]="nombre" name="nombre" required></ion-input>
-    </ion-item>
+<ion-content>
+  <div class="content-wrapper">
+    <!-- Logo de FlyPark -->
+    <img src="./assets/img/FlyParkLogo.png" alt="FlyPark" class="login-icon" />
+    <h2 style="color: white;">FlyPark</h2>
 
-    <ion-item>
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Teléfono</ion-label>
-      <ion-input type="tel" [(ngModel)]="telefono" name="telefono" required></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
-    </ion-item>
-
-    <ion-item lines="none" class="ion-margin-top">
-      <ion-button expand="full" (click)="tomarFoto()">Tomar Foto</ion-button>
-    </ion-item>
-
+    <!-- Imagen de perfil si existe -->
     <div *ngIf="fotoBase64" class="ion-text-center ion-margin-top">
-      <img [src]="fotoBase64" style="width: 150px; height: 150px; object-fit: cover; border-radius: 10px;" />
+      <img [src]="fotoBase64" />
     </div>
 
-    <ion-button expand="full" type="submit" class="ion-margin-top">
-      Registrarse
-    </ion-button>
+    <form (ngSubmit)="registrar()">
+      <!-- Botón para tomar foto -->
+      <ion-button expand="full" (click)="tomarFoto()" class="ion-margin-top">
+        Tomar Foto
+      </ion-button>
 
-    <ion-button expand="full" fill="clear" routerLink="/login">
-      Ya tengo una cuenta
-    </ion-button>
-  </form>
+      <!-- Campos del formulario -->
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input type="text" [(ngModel)]="nombre" name="nombre" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Teléfono</ion-label>
+        <ion-input type="tel" [(ngModel)]="telefono" name="telefono" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
+      </ion-item>
+
+      <!-- Botones -->
+      <ion-button expand="full" type="submit">
+        Registrarse
+      </ion-button>
+
+      <ion-button expand="full" fill="clear" (click)="irALogin()">
+        <ion-icon slot="end" name="log-in-outline"></ion-icon>
+        Ya tengo una cuenta
+      </ion-button>
+    </form>
+  </div>
 </ion-content>

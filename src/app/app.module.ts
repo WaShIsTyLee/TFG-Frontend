@@ -8,7 +8,11 @@ import { HttpClientModule } from '@angular/common/http';  // Importa el módulo 
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule  // Asegúrate de que HttpClientModule está en los imports
+  imports: [
+    BrowserModule, 
+    IonicModule.forRoot(), 
+    AppRoutingModule, 
+    HttpClientModule,  // Asegúrate de que HttpClientModule está en los imports
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

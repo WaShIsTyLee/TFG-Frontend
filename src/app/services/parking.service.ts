@@ -6,6 +6,8 @@ interface Parking {
   idParking: number;
   nombre: string;
   ubicacion: string;
+  latitud: number;
+  longitud: number;
 }
 
 interface Plaza {

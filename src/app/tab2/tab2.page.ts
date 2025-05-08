@@ -1,23 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { ParkingService } from '../services/parking.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { ModalController } from '@ionic/angular';
 import { PlazasModalComponent } from '../plazas-modal/plazas-modal.component';
+import * as L from 'leaflet';
 
-
+// Definir las interfaces para Parking y Plaza
 interface Parking {
   idParking: number;
   nombre: string;
   ubicacion: string;
+  latitud: number;
+  longitud: number;
+  isMapaVisible: boolean;
 }
 
 interface Plaza {
   idPlaza: number;
   idParking: number;
   numeroPlaza: string;
-  
 }
 
 @Component({
@@ -41,10 +43,56 @@ export class Tab2Page implements OnInit {
     this.loadParkings();
   }
 
+  toggleMapa(parking: Parking) {
+    parking.isMapaVisible = !parking.isMapaVisible;
+
+    if (parking.isMapaVisible) {
+      // Inicializamos el mapa con delay para asegurar que el DOM ya está renderizado
+      setTimeout(() => this.initMap(parking), 100);
+    }
+  }
+
+  initMap(parking: Parking) {
+    const mapId = `mapa-${parking.idParking}`;
+    setTimeout(() => {
+      const mapElement = document.getElementById(mapId);
+      if (!mapElement) return;
+  
+      const map = L.map(mapElement).setView([parking.latitud, parking.longitud], 16);
+  
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+      }).addTo(map);
+  
+      // Aquí agregamos el marcador con el icono predeterminado
+      const icon = L.icon({
+        iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png', // URL del icono predeterminado
+        iconSize: [25, 41], // Tamaño del icono
+        iconAnchor: [12, 41], // Punto de anclaje del icono
+        popupAnchor: [1, -34], // Ajuste del popup
+      });
+  
+      L.marker([parking.latitud, parking.longitud], { icon: icon })
+        .addTo(map)
+        .bindPopup(parking.nombre)
+        .openPopup();
+  
+      // Forzar redimensionamiento del mapa después de renderizar
+      setTimeout(() => {
+        map.invalidateSize();
+      }, 100);
+    }, 0);
+  }
+  
+
+
   loadParkings() {
     this.parkingService.getParkings().subscribe(
       (data) => {
-        this.parkings = data;
+        this.parkings = data.map((parking) => ({
+          ...parking,
+          isMapaVisible: false,
+        }));
       },
       (error) => {
         console.error('Error al cargar los parkings', error);
@@ -82,77 +130,65 @@ export class Tab2Page implements OnInit {
             const fechaInicio = new Date(data.fechaInicio);
             const fechaFin = new Date(data.fechaFin);
             const ahora = new Date();
-  
+
             if (!data.fechaInicio || !data.fechaFin) {
-              await this.alertController.create({
-                header: 'Fechas requeridas',
-                message: 'Debes seleccionar ambas fechas.',
-                buttons: ['OK']
-              }).then(a => a.present());
+              await this.alertMessage('Fechas requeridas', 'Debes seleccionar ambas fechas.');
               return false;
             }
-  
+
             if (fechaInicio < ahora) {
-              await this.alertController.create({
-                header: 'Fecha inválida',
-                message: 'La fecha de entrada no puede ser anterior al día de hoy.',
-                buttons: ['OK']
-              }).then(a => a.present());
+              await this.alertMessage('Fecha inválida', 'La fecha de entrada no puede ser anterior al día de hoy.');
               return false;
             }
-  
+
             if (fechaInicio >= fechaFin) {
-              await this.alertController.create({
-                header: 'Fechas inválidas',
-                message: 'La fecha de entrada debe ser anterior a la de salida.',
-                buttons: ['OK']
-              }).then(a => a.present());
+              await this.alertMessage('Fechas inválidas', 'La fecha de entrada debe ser anterior a la de salida.');
               return false;
             }
-  
-            // Si las fechas son válidas, buscamos las plazas
+
             const fechaInicioISO = data.fechaInicio;
             const fechaFinISO = data.fechaFin;
-  
+
             this.parkingService.getPlazasDisponibles(idParking, fechaInicioISO, fechaFinISO).subscribe(
               (plazas) => {
                 if (!plazas || plazas.length === 0) {
                   this.presentAlert();
                   return;
                 }
-  
+
                 this.openPlazasModal(plazas, fechaInicioISO, fechaFinISO);
               },
               (error) => {
                 console.error('Error al cargar las plazas disponibles', error);
               }
             );
-  
+
             return true;
           }
         }
       ]
     });
-  
+
     await alert.present();
   }
-  
-  
 
   async openPlazasModal(plazas: Plaza[], fechaEntrada: string, fechaSalida: string) {
     const modal = await this.modalController.create({
       component: PlazasModalComponent,
       componentProps: { plazas, fechaEntrada, fechaSalida }
     });
-  
+
     await modal.present();
   }
-  
 
   async presentAlert() {
+    await this.alertMessage('Sin plazas disponibles', 'No hay plazas disponibles en este parking.');
+  }
+
+  private async alertMessage(header: string, message: string) {
     const alert = await this.alertController.create({
-      header: 'Sin plazas disponibles',
-      message: 'No hay plazas disponibles en este parking.',
+      header,
+      message,
       buttons: ['OK']
     });
 
