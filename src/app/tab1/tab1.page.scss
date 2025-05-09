@@ -1,18 +1,76 @@
-ion-card {
-  background: rgba(26, 26, 26, 0.8); /* Fondo translúcido */
-  color: #fff;
-  width: 100%;
-  margin-top: 10px; /* Reducir espacio superior */
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-  padding: 15px; /* Ajustar padding dentro de la tarjeta */
-  min-height: 280px; /* Aumentar altura mínima */
+ion-content {
+  background: linear-gradient(to bottom, #e0f7fa, #ffffff); /* fondo más suave compatible con teal */
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-background {
+  --background: none;
+  background: linear-gradient(to bottom, #e0f7fa, #ffffff);
+}
+
+ion-header {
+  background-color: #177e89;
+  color: #fff;
+  padding: 10px;
+}
+
+ion-toolbar {
+  --background: #177e89;
+  --color: #fff;
+  text-align: center;
+}
+
+ion-title {
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.titulo-seccion {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-top: 20px;
+  color: #323031;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 10px;
+}
+
+@media (max-width: 992px) {
+  .card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.reserva-card {
+  background: #ffffff;
+  color: #323031;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  padding: 15px;
+  min-height: 280px;
 }
 
 ion-card-header {
-  background-color: #800000;
+  background-color: #084c61;
   border-radius: 12px 12px 0 0;
 }
 
@@ -20,19 +78,17 @@ ion-card-title {
   color: #fff;
   font-size: 1.2rem;
   padding: 8px;
-  white-space: nowrap;
 }
 
 ion-card-subtitle {
-  color: #ccc;
+  color: #dcefff;
   font-size: 0.9rem;
 }
 
 ion-card-content {
   padding: 10px;
-  font-size: 0.9rem; /* Reducir el tamaño de la fuente */
-  line-height: 1.4; /* Espaciado más compacto */
-  flex-grow: 1; /* Asegura que el contenido se expanda para llenar el espacio */
+  font-size: 0.9rem;
+  line-height: 1.4;
 }
 
 ion-card p {
@@ -40,46 +96,47 @@ ion-card p {
 }
 
 ion-button {
-  margin-top: 10px;
-  align-self: center; /* Asegura que el botón esté centrado */
+  width: 90%;
+  max-width: 350px;
+  font-size: 1rem;
+  margin-top: 8px;
+  --border-radius: 20px;
 }
 
-.titulo-seccion {
+/* Primer botón: primario (teal) */
+ion-button:first-of-type {
+  --background: #177e89;
+  --color: #ffffff;
+}
+
+/* Segundo botón: secundario (amarillo) */
+ion-button:nth-of-type(2) {
+  --background: #ffc857;
+  --color: #323031;
+}
+
+/* Último botón: peligro (rojo) */
+ion-button:last-of-type {
+  --background: #db3a34;
+  --color: #ffffff;
+}
+
+ion-button ion-icon[slot="start"] {
+  margin-right: 10px;
+}
+
+ion-button ion-icon[slot="end"] {
+  margin-left: 10px;
+}
+
+ion-text p {
+  color: #323031;
+  font-size: 1rem;
   text-align: center;
-  font-size: 1.4rem;
-  margin-top: 20px;
-  font-weight: bold;
-  color: #fff;
-}
-
-.card-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columnas por fila */
-  gap: 15px;
-  padding: 0 10px;
-}
-
-@media (max-width: 1200px) {
-  .card-container {
-    grid-template-columns: repeat(3, 1fr); /* 3 columnas por fila en pantallas grandes */
-  }
-}
-
-@media (max-width: 992px) {
-  .card-container {
-    grid-template-columns: repeat(2, 1fr); /* 2 columnas por fila en pantallas medianas */
-  }
-}
-
-@media (max-width: 768px) {
-  .card-container {
-    grid-template-columns: repeat(2, 1fr); /* 2 columnas por fila en pantallas pequeñas */
-  }
 }
 
 @media (max-width: 480px) {
-  .card-container {
-    grid-template-columns: 1fr; /* 1 columna por fila en pantallas muy pequeñas */
+  .titulo-seccion {
+    font-size: 1.2rem;
   }
 }
-

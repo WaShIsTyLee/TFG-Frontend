@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
-import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +14,6 @@ import { AlertController } from '@ionic/angular';
   imports: [CommonModule, IonicModule, FormsModule],
 })
 export class LoginPage implements OnInit {
-
   username: string = '';
   password: string = '';
   passwordType: string = 'password';
@@ -25,7 +23,7 @@ export class LoginPage implements OnInit {
     private router: Router,
     private authService: AuthService,
     private userService: UserService,
-    private alertController: AlertController
+    private toastController: ToastController
   ) {}
 
   ngOnInit() {}
@@ -38,43 +36,43 @@ export class LoginPage implements OnInit {
     this.userService.logOut();
   }
 
+  async presentToast(message: string, color: 'success' | 'danger' | 'warning' = 'danger') {
+    const toast = await this.toastController.create({
+      message,
+      duration: 3000,
+      position: 'bottom',
+      color: color,
+    });
+    toast.present();
+  }
+
   login() {
     if (!this.username || !this.password) {
-      this.presentAlert('Por favor completa todos los campos');
+      this.presentToast('Por favor completa todos los campos', 'warning');
       return;
     }
 
     this.authService.login(this.username, this.password).subscribe(
       user => {
-        console.log('🧾 Usuario recibido del backend:', user);  // 👈 AÑÁDELO AQUÍ
-    
+        console.log('🧾 Usuario recibido del backend:', user);
+
         if (user) {
           this.userService.setUser(user);
-          localStorage.setItem('usuario', JSON.stringify(user));  // 👈 GUÁRDALO TAMBIÉN
+          localStorage.setItem('usuario', JSON.stringify(user));
+          this.presentToast(`✔️ Bienvenido ${user.name}`, 'success');
           this.router.navigate(['/tabs']);
         } else {
-          this.presentAlert('Credenciales inválidas');
+          this.presentToast('Credenciales inválidas', 'danger');
         }
       },
       error => {
         console.error('❌ Error en login:', error);
-        this.presentAlert('Error de conexión. Intenta más tarde.');
+        this.presentToast('Error de conexión. Intenta más tarde.', 'danger');
       }
     );
-    
   }
+
   register() {
-    this.router.navigate(['/register']); // 👈 Navega a la página de registro
+    this.router.navigate(['/register']);
   }
-
-  async presentAlert(message: string) {
-    const alert = await this.alertController.create({
-      header: 'Error de inicio de sesión',
-      message: message,
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
-
-  
 }

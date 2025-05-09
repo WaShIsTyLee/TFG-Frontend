@@ -5,6 +5,10 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { PlazasModalComponent } from '../plazas-modal/plazas-modal.component';
 import * as L from 'leaflet';
+import { Geolocation } from '@capacitor/geolocation';
+import 'leaflet-routing-machine';
+
+
 
 // Definir las interfaces para Parking y Plaza
 interface Parking {
@@ -64,20 +68,61 @@ export class Tab2Page implements OnInit {
         attribution: '© OpenStreetMap contributors',
       }).addTo(map);
   
-      // Aquí agregamos el marcador con el icono predeterminado
-      const icon = L.icon({
-        iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png', // URL del icono predeterminado
-        iconSize: [25, 41], // Tamaño del icono
-        iconAnchor: [12, 41], // Punto de anclaje del icono
-        popupAnchor: [1, -34], // Ajuste del popup
+      const parkingIcon = L.icon({
+        iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
       });
   
-      L.marker([parking.latitud, parking.longitud], { icon: icon })
+      L.marker([parking.latitud, parking.longitud], { icon: parkingIcon })
         .addTo(map)
         .bindPopup(parking.nombre)
         .openPopup();
   
-      // Forzar redimensionamiento del mapa después de renderizar
+      Geolocation.getCurrentPosition().then(position => {
+        const userLat = position.coords.latitude;
+        const userLng = position.coords.longitude;
+  
+        const userIcon = L.icon({
+          iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+          iconSize: [30, 46],
+          iconAnchor: [15, 46],
+          popupAnchor: [0, -40],
+        });
+  
+        L.marker([userLat, userLng], { icon: userIcon })
+          .addTo(map)
+          .bindPopup('Tu ubicación')
+          .openPopup();
+  
+        // Agregar ruta sin mostrar el panel de instrucciones y sin marcadores automáticos
+        const routingControl = L.Routing.control({
+          waypoints: [
+            L.latLng(userLat, userLng),
+            L.latLng(parking.latitud, parking.longitud)
+          ],
+          routeWhileDragging: false,
+          addWaypoints: false,
+          fitSelectedRoutes: true,
+          show: false,
+          createMarker: () => null // Este campo no está tipado oficialmente, así que forzamos el tipo
+        } as any); // ← ← ← solución al error de TypeScript
+  
+        routingControl.addTo(map);
+  
+        // Eliminar el contenedor de instrucciones si aparece
+        setTimeout(() => {
+          const panel = document.querySelector('.leaflet-routing-container');
+          if (panel && panel.parentElement) {
+            panel.parentElement.removeChild(panel);
+          }
+        }, 500);
+  
+      }).catch(err => {
+        console.error('Error al obtener la ubicación del usuario', err);
+      });
+  
       setTimeout(() => {
         map.invalidateSize();
       }, 100);
@@ -85,6 +130,7 @@ export class Tab2Page implements OnInit {
   }
   
 
+  
 
   loadParkings() {
     this.parkingService.getParkings().subscribe(

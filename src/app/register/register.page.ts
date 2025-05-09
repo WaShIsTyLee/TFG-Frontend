@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AlertController, IonicModule } from '@ionic/angular';
+import { IonicModule, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
@@ -23,7 +23,7 @@ export class RegisterPage {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private alertController: AlertController
+    private toastController: ToastController
   ) {}
 
   async tomarFoto() {
@@ -44,45 +44,40 @@ export class RegisterPage {
   irALogin() {
     this.router.navigateByUrl('/login');
   }
-  
-async registrar() {
-  if (!this.nombre || !this.email || !this.telefono || !this.password) {
-    const alert = await this.alertController.create({
-      header: 'Campos incompletos',
-      message: 'Por favor, completa todos los campos obligatorios.',
-      buttons: ['OK']
+
+  async mostrarToast(mensaje: string, color: 'success' | 'danger' | 'warning') {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 3000,
+      color: color,
+      position: 'bottom'
     });
-    await alert.present();
-    return;
+    toast.present();
   }
 
-  const usuario = {
-    name: this.nombre,
-    email: this.email,
-    phone: this.telefono,
-    password: this.password,
-    foto: this.fotoBase64
-  };
-
-  this.http.post('http://localhost:8080/usuario/register', usuario).subscribe({
-    next: async () => {
-      const alert = await this.alertController.create({
-        header: 'Registro exitoso',
-        message: 'Ya puedes iniciar sesión',
-        buttons: ['OK']
-      });
-      await alert.present();
-      this.router.navigateByUrl('/login');
-    },
-    error: async (err) => {
-      const alert = await this.alertController.create({
-        header: 'Error',
-        message: err.error || 'Error al registrar el usuario',
-        buttons: ['OK']
-      });
-      await alert.present();
+  async registrar() {
+    if (!this.nombre || !this.email || !this.telefono || !this.password) {
+      this.mostrarToast('Por favor, completa todos los campos obligatorios.', 'warning');
+      return;
     }
-  });
-}
 
+    const usuario = {
+      name: this.nombre,
+      email: this.email,
+      phone: this.telefono,
+      password: this.password,
+      foto: this.fotoBase64
+    };
+
+    this.http.post('http://localhost:8080/usuario/register', usuario).subscribe({
+      next: async () => {
+        this.mostrarToast('✅ Registro exitoso. Ya puedes iniciar sesión.', 'success');
+        this.router.navigateByUrl('/login');
+      },
+      error: async (err) => {
+        const mensaje = err.error || 'Error al registrar el usuario';
+        this.mostrarToast(`❌ ${mensaje}`, 'danger');
+      }
+    });
+  }
 }

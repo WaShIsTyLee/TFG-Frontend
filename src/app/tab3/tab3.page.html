@@ -1,53 +1,60 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Perfil</ion-title>
-  </ion-toolbar>
+  <div class="toolbar-container">
+    <ion-toolbar>
+      <ion-title>Perfil</ion-title>
+    </ion-toolbar>
+  </div>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="login-background">
+  <div class="content-wrapper" *ngIf="usuarioActual">
+    <img
+      *ngIf="fotoPerfil; else sinFoto"
+      [src]="fotoPerfil"
+      alt="Foto de perfil"
+      class="login-icon"
+    />
+    <ng-template #sinFoto>
+      <p><em>Sin foto de perfil</em></p>
+    </ng-template>
 
-  <div *ngIf="usuarioActual">
-    <div class="perfil-container" style="text-align: center;">
-      <img 
-        *ngIf="fotoPerfil; else sinFoto" 
-        [src]="fotoPerfil" 
-        alt="Foto de perfil" 
-        class="foto-perfil" 
-        style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 2px solid #ccc;" 
-      />
-      <ng-template #sinFoto>
-        <p><em>Sin foto de perfil</em></p>
-      </ng-template>
-    </div>
+    <ion-item>
+      <ion-icon slot="start" name="person-outline" class="dark-icon"></ion-icon>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input [(ngModel)]="usuarioActual.name" type="text"></ion-input>
+    </ion-item>
 
-    <ion-list>
-      <ion-item>
-        <ion-label position="stacked"><strong>Nombre:</strong></ion-label>
-        <ion-input [(ngModel)]="usuarioActual.name" placeholder="Introduce tu nombre"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked"><strong>Email:</strong></ion-label>
-        <ion-input [(ngModel)]="usuarioActual.email" placeholder="Introduce tu email"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked"><strong>Teléfono:</strong></ion-label>
-        <ion-input [(ngModel)]="usuarioActual.phone" placeholder="Introduce tu teléfono"></ion-input>
-      </ion-item>
-    </ion-list>
+    <ion-item>
+      <ion-icon slot="start" name="mail-outline" class="dark-icon"></ion-icon>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input [(ngModel)]="usuarioActual.email" type="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="lock-closed-outline" class="dark-icon"></ion-icon>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input [(ngModel)]="usuarioActual.password" type="password"></ion-input>
+    </ion-item>
+    
 
-    <div class="button-container">
-      <ion-button expand="full" color="primary" (click)="takeProfilePhoto()">
-        Cambiar foto
-      </ion-button>
+    <ion-item>
+      <ion-icon slot="start" name="call-outline" class="dark-icon"></ion-icon>
+      <ion-label position="floating">Teléfono</ion-label>
+      <ion-input [(ngModel)]="usuarioActual.phone" type="tel"></ion-input>
+    </ion-item>
 
-      <ion-button expand="full" color="success" (click)="updateUserProfile()">
-        Guardar cambios
-      </ion-button>
+    <ion-button expand="full" color="primary" (click)="takeProfilePhoto()">
+      <ion-icon slot="start" name="camera-outline"></ion-icon>
+      Cambiar foto
+    </ion-button>
 
-      <ion-button expand="full" color="danger" (click)="logout()">
-        Cerrar sesión
-      </ion-button>
-    </div>
+    <ion-button expand="full" color="success" (click)="updateUserProfile()">
+      <ion-icon slot="end" name="save-outline"></ion-icon>
+      Guardar cambios
+    </ion-button>
+
+    <ion-button expand="full" color="danger" (click)="logout()">
+      <ion-icon slot="start" name="log-out-outline"></ion-icon>
+      Cerrar sesión
+    </ion-button>
   </div>
-
 </ion-content>

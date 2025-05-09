@@ -1,1 +1,23 @@
-
+ion-tab-bar {
+    background: #084c61; /* Fondo de barra de tabs */
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  ion-tab-button {
+    --background: transparent;
+    --color: #d3d3d3; /* Color para tabs inactivos */
+  }
+  
+  ion-tab-button[aria-selected="true"] {
+    --color: #323031; /* Negro de la paleta cuando está seleccionado */
+  }
+  
+  ion-icon{
+    color: white;
+  }
+  
+  .labelJ {
+    background: #084c61;
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.2);
+  }
+  

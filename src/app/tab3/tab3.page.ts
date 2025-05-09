@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UtilsService } from '../services/utils.service'; // Importa el servicio
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab3',
@@ -19,8 +20,20 @@ export class Tab3Page {
   constructor(
     private userService: UserService,
     private router: Router,
-    private utilsService: UtilsService // Inyecta el servicio aquí
+    private utilsService: UtilsService, // Inyecta el servicio aquí
+    private toastController: ToastController // <-- Añadir aquí
+
   ) {}
+  async presentErrorToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 3000,
+      color: 'danger',
+      position: 'bottom'
+    });
+    await toast.present();
+  }
+  
 
   // Método para capturar una foto
   async takeProfilePhoto() {
@@ -40,14 +53,15 @@ export class Tab3Page {
     this.userService.updatePerfil(this.usuarioActual).subscribe({
       next: (updatedUser) => {
         console.log('👤 Perfil actualizado correctamente', updatedUser);
-        this.usuarioActual = updatedUser; // Actualiza el usuario con los nuevos datos
+        this.usuarioActual = updatedUser;
       },
       error: (err) => {
         console.error('Error al actualizar el perfil:', err);
+        this.presentErrorToast('❌ Error al actualizar el perfil. Email ya registrado.');
       }
     });
   }
-
+  
   // Método ngOnInit para cargar el usuario
   ngOnInit() {
     this.userService.getUser().subscribe(user => {
