@@ -1,60 +1,63 @@
 <ion-header>
-  <div class="toolbar-container">
-    <ion-toolbar>
-      <ion-title>Perfil</ion-title>
-    </ion-toolbar>
-  </div>
+  <ion-title>Perfil</ion-title>
 </ion-header>
 
 <ion-content class="login-background">
-  <div class="content-wrapper" *ngIf="usuarioActual">
-    <img
-      *ngIf="fotoPerfil; else sinFoto"
-      [src]="fotoPerfil"
-      alt="Foto de perfil"
-      class="login-icon"
-    />
-    <ng-template #sinFoto>
-      <p><em>Sin foto de perfil</em></p>
-    </ng-template>
+  <div class="form">
+    <div class="content-wrapper" *ngIf="usuarioActual">
+      <img *ngIf="fotoPerfil; else sinFoto" [src]="fotoPerfil" alt="Foto de perfil" class="login-icon" />
+      <ng-template #sinFoto>
+        <p style="color: #333;"><em>Sin foto de perfil</em></p>
+      </ng-template>
 
-    <ion-item>
-      <ion-icon slot="start" name="person-outline" class="dark-icon"></ion-icon>
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input [(ngModel)]="usuarioActual.name" type="text"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="person-outline" class="dark-icon"></ion-icon>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input [(ngModel)]="usuarioActual.name" type="text"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-icon slot="start" name="mail-outline" class="dark-icon"></ion-icon>
-      <ion-label position="floating">Email</ion-label>
-      <ion-input [(ngModel)]="usuarioActual.email" type="email"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-icon slot="start" name="lock-closed-outline" class="dark-icon"></ion-icon>
-      <ion-label position="floating">Contraseña</ion-label>
-      <ion-input [(ngModel)]="usuarioActual.password" type="password"></ion-input>
-    </ion-item>
-    
+      <ion-item>
+        <ion-icon slot="start" name="mail-outline" class="dark-icon"></ion-icon>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input [(ngModel)]="usuarioActual.email" type="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="lock-closed-outline" class="dark-icon"></ion-icon>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input [(ngModel)]="usuarioActual.password" type="password"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="call-outline" class="dark-icon"></ion-icon>
+        <ion-label position="floating">Teléfono</ion-label>
+        <ion-input [(ngModel)]="usuarioActual.phone" type="tel"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="wallet-outline" class="dark-icon"></ion-icon>
+        <ion-label position="floating">Monedero</ion-label>
+        <ion-input [(ngModel)]="usuarioActual.monedero" type="text" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="cash-outline" class="dark-icon"></ion-icon>
+        <ion-label position="floating">Añadir fondos</ion-label>
+        <ion-input [(ngModel)]="fondosAAgregar" type="number"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-icon slot="start" name="call-outline" class="dark-icon"></ion-icon>
-      <ion-label position="floating">Teléfono</ion-label>
-      <ion-input [(ngModel)]="usuarioActual.phone" type="tel"></ion-input>
-    </ion-item>
+      <ion-button expand="full" color="success" (click)="agregarFondos()">
+        Añadir al monedero
+      </ion-button>
 
-    <ion-button expand="full" color="primary" (click)="takeProfilePhoto()">
-      <ion-icon slot="start" name="camera-outline"></ion-icon>
-      Cambiar foto
-    </ion-button>
 
-    <ion-button expand="full" color="success" (click)="updateUserProfile()">
-      <ion-icon slot="end" name="save-outline"></ion-icon>
-      Guardar cambios
-    </ion-button>
+      <ion-button expand="full" (click)="takeProfilePhoto()">
+        Cambiar foto
+      </ion-button>
 
-    <ion-button expand="full" color="danger" (click)="logout()">
-      <ion-icon slot="start" name="log-out-outline"></ion-icon>
-      Cerrar sesión
-    </ion-button>
+      <ion-button expand="full" (click)="updateUserProfile()">
+        Guardar cambios
+      </ion-button>
+
+      <ion-button expand="full" (click)="logout()">
+        Cerrar sesión
+      </ion-button>
+    </div>
   </div>
 </ion-content>

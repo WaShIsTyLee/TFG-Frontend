@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { TicketModalComponent } from '../ticket-modal/ticket-modal.component';
+import { take } from 'rxjs/operators';
 
 @Component({
   imports: [CommonModule, IonicModule, FormsModule],
@@ -18,20 +19,22 @@ import { TicketModalComponent } from '../ticket-modal/ticket-modal.component';
 export class Tab1Page implements OnInit {
   reservasActivas: any[] = [];
   reservasTotales: any[] = [];
+  private actualizandoUsuario = false;
 
   constructor(
     private reservaService: ReservaService,
     private userService: UserService,
     private alertController: AlertController,
     private datePipe: DatePipe,
-    private modalController: ModalController // ← AÑADIDO
+    private modalController: ModalController
   ) {}
-  
 
   ngOnInit() {}
 
   ionViewWillEnter() {
-    this.cargarReservas();
+    if (!this.actualizandoUsuario) {
+      this.cargarReservas();
+    }
   }
 
   async mostrarTicket(reserva: any) {
@@ -39,15 +42,13 @@ export class Tab1Page implements OnInit {
       component: TicketModalComponent,
       componentProps: { reserva },
     });
-  
+
     await modal.present();
   }
-  
 
   cargarReservas() {
-    this.userService.getUser().subscribe((user) => {
+    this.userService.getUser().pipe(take(1)).subscribe((user) => {
       if (user && user.id_usuario) {
-        // Obtener reservas activas
         this.reservaService.getReservasActivasPorUsuarioId(user.id_usuario).subscribe({
           next: (data) => {
             console.log('📦 Reservas activas obtenidas:', data);
@@ -58,7 +59,6 @@ export class Tab1Page implements OnInit {
           },
         });
 
-        // Obtener reservas totales
         this.reservaService.getReservasPorUsuarioId(user.id_usuario).subscribe({
           next: (data) => {
             console.log('📦 Reservas totales obtenidas:', data);
@@ -96,8 +96,27 @@ export class Tab1Page implements OnInit {
 
   eliminarReserva(idReserva: number) {
     this.reservaService.eliminarReserva(idReserva).subscribe(() => {
+      // Actualizar UI local
       this.reservasTotales = this.reservasTotales.filter((r) => r.idReserva !== idReserva);
       this.reservasActivas = this.reservasActivas.filter((r) => r.idReserva !== idReserva);
+
+      // Actualizar usuario solo si cambió
+      this.actualizandoUsuario = true;
+
+      this.userService.getUser().pipe(take(1)).subscribe(currentUser => {
+        const idUsuario = currentUser?.id_usuario;
+        if (idUsuario) {
+          this.userService.getUserById(idUsuario).pipe(take(1)).subscribe(usuarioActualizado => {
+            const esDiferente = JSON.stringify(currentUser) !== JSON.stringify(usuarioActualizado);
+            if (esDiferente) {
+              this.userService.setUser(usuarioActualizado);
+            }
+            this.actualizandoUsuario = false;
+          });
+        } else {
+          this.actualizandoUsuario = false;
+        }
+      });
     });
   }
 

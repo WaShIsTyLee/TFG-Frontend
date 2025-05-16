@@ -18,6 +18,7 @@ export class RegisterPage {
   email: string = '';
   telefono: string = '';
   password: string = '';
+  monedero: number = 0;
   fotoBase64: string | null = null;
 
   constructor(
@@ -60,15 +61,22 @@ export class RegisterPage {
       this.mostrarToast('Por favor, completa todos los campos obligatorios.', 'warning');
       return;
     }
-
+  
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.email)) {
+      this.mostrarToast('El correo electrónico no tiene un formato válido.', 'danger');
+      return;
+    }
+  
     const usuario = {
       name: this.nombre,
       email: this.email,
       phone: this.telefono,
       password: this.password,
+      monedero: this.monedero,
       foto: this.fotoBase64
     };
-
+  
     this.http.post('http://localhost:8080/usuario/register', usuario).subscribe({
       next: async () => {
         this.mostrarToast('✅ Registro exitoso. Ya puedes iniciar sesión.', 'success');
@@ -80,4 +88,5 @@ export class RegisterPage {
       }
     });
   }
+  
 }

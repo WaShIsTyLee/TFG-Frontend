@@ -5,14 +5,14 @@ ion-content {
 
 ion-header,
 ion-toolbar {
-  background: transparent; /* Negro */
-  --color: #ffb826;      /* Dorado */
+  background: transparent;
+  --color: #ffb826; /* Dorado */
   text-align: center;
   padding: 10px;
 }
 
 ion-title {
-  color: white; /* Dorado */
+  color: white;
   font-size: 1.8rem;
   font-weight: bold;
 }
@@ -35,7 +35,7 @@ ion-card-header {
 }
 
 ion-card-title {
-  color: white; /* Dorado */
+  color: white;
   font-size: 1.4rem;
   padding: 10px;
 }
@@ -49,7 +49,17 @@ ion-card-content {
   color: #000000;
 }
 
-/* Botones */
+ion-searchbar {
+  color: #000;
+  --background: #ffffff;
+  --border-radius: 25px;
+  margin: 10px 0;
+}
+
+ion-searchbar input {
+  font-size: 1.2rem;
+}
+
 ion-button {
   align-items: center;
   width: 100%;
@@ -58,18 +68,10 @@ ion-button {
   margin-top: 10px;
 }
 
-.btn-ticket {
-  
+/* Botón "Ver detalles" */
+.btn-view-details {
   align-items: center;
   width: 50%;
-  --background: black; /* Dorado */
-  --color: #ffb826;      /* Negro */
+  --background: #ffb826; /* Dorado */
+  --color: #000000;      /* Negro */
 }
-
-.btn-eliminar {
-  align-items: center;
-  width: 50%;
-  --background: #ffb826; /* Granate elegante */
-  --color: #ffffff;      /* Blanco */
-}
-

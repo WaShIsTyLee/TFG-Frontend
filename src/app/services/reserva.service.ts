@@ -26,4 +26,5 @@ export class ReservaService {
   eliminarReserva(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiBase}/${id}`);
   }
+  
 }

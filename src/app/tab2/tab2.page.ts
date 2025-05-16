@@ -4,20 +4,14 @@ import { AlertController, ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { PlazasModalComponent } from '../plazas-modal/plazas-modal.component';
-import * as L from 'leaflet';
-import { Geolocation } from '@capacitor/geolocation';
-import 'leaflet-routing-machine';
+import { MapaModalComponent } from '../mapa-modal/mapa-modal.component';
 
-
-
-// Definir las interfaces para Parking y Plaza
 interface Parking {
   idParking: number;
   nombre: string;
   ubicacion: string;
   latitud: number;
   longitud: number;
-  isMapaVisible: boolean;
 }
 
 interface Plaza {
@@ -30,6 +24,7 @@ interface Plaza {
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
+  standalone: true,
   imports: [CommonModule, IonicModule],
 })
 export class Tab2Page implements OnInit {
@@ -47,98 +42,10 @@ export class Tab2Page implements OnInit {
     this.loadParkings();
   }
 
-  toggleMapa(parking: Parking) {
-    parking.isMapaVisible = !parking.isMapaVisible;
-
-    if (parking.isMapaVisible) {
-      // Inicializamos el mapa con delay para asegurar que el DOM ya está renderizado
-      setTimeout(() => this.initMap(parking), 100);
-    }
-  }
-
-  initMap(parking: Parking) {
-    const mapId = `mapa-${parking.idParking}`;
-    setTimeout(() => {
-      const mapElement = document.getElementById(mapId);
-      if (!mapElement) return;
-  
-      const map = L.map(mapElement).setView([parking.latitud, parking.longitud], 16);
-  
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors',
-      }).addTo(map);
-  
-      const parkingIcon = L.icon({
-        iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-      });
-  
-      L.marker([parking.latitud, parking.longitud], { icon: parkingIcon })
-        .addTo(map)
-        .bindPopup(parking.nombre)
-        .openPopup();
-  
-      Geolocation.getCurrentPosition().then(position => {
-        const userLat = position.coords.latitude;
-        const userLng = position.coords.longitude;
-  
-        const userIcon = L.icon({
-          iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
-          iconSize: [30, 46],
-          iconAnchor: [15, 46],
-          popupAnchor: [0, -40],
-        });
-  
-        L.marker([userLat, userLng], { icon: userIcon })
-          .addTo(map)
-          .bindPopup('Tu ubicación')
-          .openPopup();
-  
-        // Agregar ruta sin mostrar el panel de instrucciones y sin marcadores automáticos
-        const routingControl = L.Routing.control({
-          waypoints: [
-            L.latLng(userLat, userLng),
-            L.latLng(parking.latitud, parking.longitud)
-          ],
-          routeWhileDragging: false,
-          addWaypoints: false,
-          fitSelectedRoutes: true,
-          show: false,
-          createMarker: () => null // Este campo no está tipado oficialmente, así que forzamos el tipo
-        } as any); // ← ← ← solución al error de TypeScript
-  
-        routingControl.addTo(map);
-  
-        // Eliminar el contenedor de instrucciones si aparece
-        setTimeout(() => {
-          const panel = document.querySelector('.leaflet-routing-container');
-          if (panel && panel.parentElement) {
-            panel.parentElement.removeChild(panel);
-          }
-        }, 500);
-  
-      }).catch(err => {
-        console.error('Error al obtener la ubicación del usuario', err);
-      });
-  
-      setTimeout(() => {
-        map.invalidateSize();
-      }, 100);
-    }, 0);
-  }
-  
-
-  
-
   loadParkings() {
     this.parkingService.getParkings().subscribe(
       (data) => {
-        this.parkings = data.map((parking) => ({
-          ...parking,
-          isMapaVisible: false,
-        }));
+        this.parkings = data;
       },
       (error) => {
         console.error('Error al cargar los parkings', error);
@@ -146,8 +53,13 @@ export class Tab2Page implements OnInit {
     );
   }
 
-  reservarPlaza(plaza: any) {
-    console.log("Reservando plaza:", plaza);
+  async openMapaModal(parking: Parking) {
+    const modal = await this.modalController.create({
+      component: MapaModalComponent,
+      componentProps: { parking }
+    });
+
+    await modal.present();
   }
 
   async loadPlazas(idParking: number) {

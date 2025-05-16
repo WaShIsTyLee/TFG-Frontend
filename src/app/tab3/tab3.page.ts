@@ -20,20 +20,53 @@ export class Tab3Page {
   constructor(
     private userService: UserService,
     private router: Router,
-    private utilsService: UtilsService, // Inyecta el servicio aquí
-    private toastController: ToastController // <-- Añadir aquí
+    private utilsService: UtilsService,
+    private toastController: ToastController
 
-  ) {}
+  ) { }
   async presentErrorToast(message: string) {
     const toast = await this.toastController.create({
       message,
       duration: 3000,
       color: 'danger',
-      position: 'bottom'
+      position: 'top'
     });
     await toast.present();
   }
-  
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 3000,
+      color: 'success',
+      position: 'top'
+    });
+    await toast.present();
+  }
+
+  fondosAAgregar: number = 0;
+
+  agregarFondos() {
+    const cantidad = Number(this.fondosAAgregar);
+    if (isNaN(cantidad) || cantidad <= 0) {
+      this.presentErrorToast('❌ Ingresa una cantidad válida mayor a 0.');
+      return;
+    }
+
+    this.usuarioActual.monedero = Number(this.usuarioActual.monedero) + cantidad;
+
+    this.userService.updatePerfil(this.usuarioActual).subscribe({
+      next: (updatedUser) => {
+        this.usuarioActual = updatedUser;
+        this.fondosAAgregar = 0; 
+        this.presentToast(`✔️ Se añadieron ${cantidad}€ al monedero.`);
+      },
+      error: (err) => {
+        console.error('Error al añadir fondos:', err);
+        this.presentErrorToast('❌ No se pudo actualizar el monedero.');
+      }
+    });
+  }
+
 
   // Método para capturar una foto
   async takeProfilePhoto() {
@@ -54,6 +87,8 @@ export class Tab3Page {
       next: (updatedUser) => {
         console.log('👤 Perfil actualizado correctamente', updatedUser);
         this.usuarioActual = updatedUser;
+        this.presentToast('✔️ Perfil actualizado correctamente.');
+
       },
       error: (err) => {
         console.error('Error al actualizar el perfil:', err);
@@ -61,7 +96,7 @@ export class Tab3Page {
       }
     });
   }
-  
+
   // Método ngOnInit para cargar el usuario
   ngOnInit() {
     this.userService.getUser().subscribe(user => {

@@ -1,56 +1,62 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Registrarse</ion-title>
+    <ion-title style="font-size: 30px;">
+      <pre>Registrarse</pre>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="content-wrapper">
-    <!-- Logo de FlyPark -->
-    <img src="./assets/img/FlyParkLogo.png" alt="FlyPark" class="login-icon" />
-    <h2 class="dark-icon">FlyPark</h2>
+  <div class="form">
+    <div class="content-wrapper">
+      <img src="./assets/img/FlyParkLogo.png" alt="FlyPark" class="login-icon" />
+      <h2 class="dark-icon" style="font-size: 30px; margin-top: -40px; margin-bottom: -40;">
+        <pre>FlyPark</pre>
+      </h2>
 
-    <!-- Imagen de perfil si existe -->
-    <div *ngIf="fotoBase64" class="ion-text-center ion-margin-top">
-      <img [src]="fotoBase64" />
+      <div *ngIf="fotoBase64" class="ion-text-center ion-margin-top">
+        <img [src]="fotoBase64" class="profile-photo" />
+      </div>
+
+      <form (ngSubmit)="registrar()">
+        <ion-item>
+          <ion-icon style="color: black;" slot="start" name="person-outline"></ion-icon>
+          <ion-label position="floating">Nombre</ion-label>
+          <ion-input type="text" [(ngModel)]="nombre" name="nombre" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon style="color: black;" slot="start" name="mail-outline"></ion-icon>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon style="color: black;" slot="start" name="lock-closed-outline"></ion-icon>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon style="color: black;" slot="start" name="call-outline"></ion-icon>
+          <ion-label position="floating">Teléfono</ion-label>
+          <ion-input type="tel" [(ngModel)]="telefono" name="telefono" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon style="color: black;" slot="start" name="wallet-outline"></ion-icon>
+          <ion-label position="floating">Monedero</ion-label>
+          <ion-input type="number" [(ngModel)]="monedero" name="monedero" required></ion-input>
+        </ion-item>
+
+        <button type="button" (click)="tomarFoto()" class="btn-donate">
+          Añadir Foto
+        </button>
+
+        <button type="submit" style="margin-top: 10px;" class="btn-donate">Registrarse</button>
+
+        <button type="button" class="btn-donate" (click)="irALogin()" style="margin-top: 10px;">Ya tengo cuenta</button>
+      </form>
     </div>
-
-    <form (ngSubmit)="registrar()">
-      <!-- Botón para tomar foto -->
-      <ion-button expand="full" (click)="tomarFoto()" class="ion-margin-top">
-        Tomar Foto
-      </ion-button>
-
-      <!-- Campos del formulario -->
-      <ion-item>
-        <ion-label position="floating">Nombre</ion-label>
-        <ion-input type="text" [(ngModel)]="nombre" name="nombre" required></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Teléfono</ion-label>
-        <ion-input type="tel" [(ngModel)]="telefono" name="telefono" required></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Contraseña</ion-label>
-        <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
-      </ion-item>
-
-      <!-- Botones -->
-      <ion-button expand="full" type="submit">
-        Registrarse
-      </ion-button>
-
-      <ion-button expand="full" fill="clear" (click)="irALogin()">
-        <ion-icon slot="end" name="log-in-outline"></ion-icon>
-        Ya tengo una cuenta
-      </ion-button>
-    </form>
   </div>
 </ion-content>

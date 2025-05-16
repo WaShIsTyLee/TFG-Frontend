@@ -19,32 +19,39 @@ export class TicketModalComponent implements OnInit {
 
   constructor(private userService: UserService) {}
 
-  ngOnInit() {
-    // Calcular duración
-    if (this.reserva?.diaEntrada && this.reserva?.diaSalida) {
-      const entrada = new Date(this.reserva.diaEntrada).getTime();
-      const salida = new Date(this.reserva.diaSalida).getTime();
-      const duracion = (salida - entrada) / 3600000;
-      this.duracionHoras = duracion.toFixed(1) + ' hrs';
-    }
+ ngOnInit() {
+  // Calcular duración
+  if (this.reserva?.diaEntrada && this.reserva?.diaSalida) {
+    const entrada = new Date(this.reserva.diaEntrada).getTime();
+    const salida = new Date(this.reserva.diaSalida).getTime();
+    const duracion = (salida - entrada) / 3600000;
 
-    // Obtener usuario logueado y generar datos para el QR
-    this.userService.getUser().subscribe(user => {
-      console.log('👤 Usuario obtenido en TicketModalComponent:', user);
-      this.usuarioActual = user;
+    this.duracionHoras = duracion.toFixed(1) + ' hrs';
 
-      // Generar QR
-      this.qrData = JSON.stringify({
-        parking: this.reserva?.parking?.nombre || 'Parking',
-        plaza: this.reserva?.plaza?.numeroPlaza || 'Plaza',
-        entrada: this.reserva?.diaEntrada,
-        salida: this.reserva?.diaSalida,
-        duracion: this.duracionHoras,
-        matricula: this.reserva?.matricula || 'No disponible',
-        usuario: user?.name || 'Cliente'
-      });
-    });
+    // Calcular precio: 0.20 € por hora
+    const precio = duracion * 0.20;
+    this.reserva.precio = precio.toFixed(2); // Guarda como string con 2 decimales
   }
+
+  // Obtener usuario logueado y generar datos para el QR
+  this.userService.getUser().subscribe(user => {
+    console.log('👤 Usuario obtenido en TicketModalComponent:', user);
+    this.usuarioActual = user;
+
+    // Generar QR
+    this.qrData = JSON.stringify({
+      parking: this.reserva?.parking?.nombre || 'Parking',
+      plaza: this.reserva?.plaza?.numeroPlaza || 'Plaza',
+      entrada: this.reserva?.diaEntrada,
+      salida: this.reserva?.diaSalida,
+      duracion: this.duracionHoras,
+      matricula: this.reserva?.matricula || 'No disponible',
+      usuario: user?.name || 'Cliente',
+      precio: this.reserva.precio + ' €'
+    });
+  });
+}
+
 
   cerrar() {
     // lógica de cierre del modal

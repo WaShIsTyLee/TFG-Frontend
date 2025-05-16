@@ -44,7 +44,8 @@ export class PlazasModalComponent implements OnInit {
   @Input() fechaSalida!: string;
 
   idUsuario!: number;
-  filas: any[] = []; // Para organizar las plazas en filas y columnas.
+  usuarioActual: any;
+  filas: any[] = [];
 
   constructor(
     private modalCtrl: ModalController,
@@ -58,6 +59,7 @@ export class PlazasModalComponent implements OnInit {
     this.userService.getUser().subscribe(user => {
       if (user) {
         this.idUsuario = user.id_usuario;
+        this.usuarioActual = user;
       }
     });
 
@@ -71,11 +73,10 @@ export class PlazasModalComponent implements OnInit {
   }
 
   organizarPlazas() {
-    const plazasPorFila = 5; // Número de plazas por fila
+    const plazasPorFila = 5;
     this.filas = [];
-
-    // Organiza las plazas en filas
     let filaActual: any[] = [];
+
     this.plazas.forEach((plaza, index) => {
       filaActual.push(plaza);
       if (filaActual.length === plazasPorFila) {
@@ -84,7 +85,6 @@ export class PlazasModalComponent implements OnInit {
       }
     });
 
-    // Si quedan plazas sin llenar una fila completa, agrega la última fila
     if (filaActual.length > 0) {
       this.filas.push(filaActual);
     }
@@ -121,7 +121,7 @@ export class PlazasModalComponent implements OnInit {
           text: 'Confirmar',
           handler: async (data) => {
             const matricula = data.matricula?.trim().toUpperCase();
-            const regexMatricula = /^([A-Z0-9]{1,7})([ -]?[A-Z0-9]{1,7})?$/; // Expresión regular para validar matrícula
+            const regexMatricula = /^([A-Z0-9]{1,7})([ -]?[A-Z0-9]{1,7})?$/;
 
             if (!matricula) {
               await this.mostrarAlerta('Campo requerido', 'Debes introducir una matrícula.');
@@ -130,6 +130,17 @@ export class PlazasModalComponent implements OnInit {
 
             if (!regexMatricula.test(matricula)) {
               await this.mostrarAlerta('Matrícula inválida', 'Introduce una matrícula válida en formato 1234-BCD (sin vocales).');
+              return false;
+            }
+
+            // 🔸 Calcular coste de la reserva
+            const costePorDia = 5; // puedes ajustar esto
+            const dias = (new Date(this.fechaSalida).getTime() - new Date(this.fechaEntrada).getTime()) / (1000 * 60 * 60 * 24);
+            const costeTotal = Math.ceil(dias) * costePorDia;
+
+            // 🔴 Validar fondos
+            if (this.usuarioActual.monedero < costeTotal) {
+              await this.mostrarAlerta('Fondos insuficientes', `Necesitas al menos ${costeTotal}€ para reservar.`);
               return false;
             }
 
@@ -147,6 +158,17 @@ export class PlazasModalComponent implements OnInit {
             this.reservaService.crearReserva(reserva).subscribe(
               (response) => {
                 console.log('Reserva creada exitosamente:', response);
+
+                // 🔄 Refrescar usuario actualizado
+                this.userService.getUserById(this.idUsuario).subscribe(
+                  (usuarioActualizado) => {
+                    this.userService.setUser(usuarioActualizado);
+                  },
+                  (error) => {
+                    console.error('Error al refrescar usuario:', error);
+                  }
+                );
+
                 this.modalCtrl.dismiss({ reservado: true, plaza });
               },
               async (error) => {

@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-title>Vuelos desde {{ selectedAirportName }}</ion-title>
+</ion-header>
+
+<ion-content>
+  <!-- Selector de Aeropuerto -->
+  <ion-item>
+    <ion-label>Aeropuerto de origen</ion-label>
+    <ion-select [(ngModel)]="selectedAirport" (ionChange)="onAirportChange()">
+      <ion-select-option *ngFor="let airport of airports" [value]="airport.code">
+        {{ airport.name }} ({{ airport.code }})
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Filtros -->
+  <ion-searchbar 
+    [(ngModel)]="searchDestination" 
+    placeholder="Buscar por destino" 
+    (ionInput)="filterFlights()">
+  </ion-searchbar>
+
+  <ion-searchbar 
+    [(ngModel)]="searchFlightNumber" 
+    placeholder="Buscar por número de vuelo" 
+    (ionInput)="filterFlights()">
+  </ion-searchbar>
+
+  <!-- Filtro por estado -->
+  <ion-item>
+    <ion-label>Filtrar por estado</ion-label>
+    <ion-select [(ngModel)]="selectedStatus" (ionChange)="filterFlights()" interface="popover" placeholder="Todos">
+      <ion-select-option value="">Todos</ion-select-option>
+      <ion-select-option *ngFor="let status of flightStatuses" [value]="status">
+        {{ translateStatus(status) }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Lista de vuelos filtrada -->
+  <ion-grid>
+    <ion-row>
+      <ng-container *ngFor="let flight of filteredDepartures">
+        <ion-col size="12" size-md="6" size-lg="4">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>{{ flight.number || 'Sin número' }} - {{ flight.airline?.name || 'Sin aerolínea' }}</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              <p>Destino: {{ flight.movement?.airport?.name || 'Desconocido' }}</p>
+              <p>Hora programada: {{ flight.scheduledTime?.local || flight.revisedTime?.local || 'No disponible' }}</p>
+              <p>Estado: {{ translateStatus(flight.status) }}</p>
+              <p>Terminal: {{ flight.movement?.terminal || 'No disponible' }}</p>
+              <p>Puerta: {{ flight.movement?.gate || 'No disponible' }}</p>
+              <p>Avión: {{ flight.aircraft?.model || 'Desconocido' }} ({{ flight.aircraft?.reg || 'No disponible' }})</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ng-container>
+    </ion-row>
+  </ion-grid>
+
+  <ng-template #noData>
+    <ion-text class="ion-padding">No hay datos disponibles</ion-text>
+  </ng-template>
+</ion-content>

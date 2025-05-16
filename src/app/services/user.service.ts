@@ -25,6 +25,11 @@ export class UserService {
   logOut() {
     this.userSubject.next(null);  // Borra el usuario
   }
+  
+  getUserById(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/getById/${id}`);
+  }
+
 
   updatePerfil(usuario: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/updatePerfil`, usuario).pipe(

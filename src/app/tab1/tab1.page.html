@@ -1,10 +1,8 @@
-<ion-content  class="login-background">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title class="labelJ">Mis Reservas</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-header>
+  <ion-title>Mis Reservas</ion-title>
+</ion-header>
 
+<ion-content class="login-background">
   <!-- Reservas Activas -->
   <h2 class="titulo-seccion">Reservas Activas</h2>
   <div *ngIf="reservasActivas.length > 0; else sinReservasActivas" class="card-container">
@@ -18,13 +16,13 @@
         <p><strong>Entrada:</strong> {{ formatFecha(reserva.diaEntrada) }}</p>
         <p><strong>Salida:</strong> {{ formatFecha(reserva.diaSalida) }}</p>
 
-        <ion-button expand="block" color="primary" (click)="mostrarTicket(reserva)" class="mb-2">
-          <ion-icon slot="start" name="document-text-outline"></ion-icon>
+        <!-- Botón Mostrar Ticket -->
+        <ion-button expand="block" class="btn-ticket" (click)="mostrarTicket(reserva)">
           Mostrar Ticket
         </ion-button>
 
-        <ion-button expand="block" color="danger" (click)="confirmarEliminar(reserva)">
-          <ion-icon slot="start" name="trash-outline"></ion-icon>
+        <!-- Botón Eliminar Reserva -->
+        <ion-button expand="block" class="btn-eliminar" (click)="confirmarEliminar(reserva)">
           Eliminar Reserva
         </ion-button>
       </ion-card-content>
@@ -50,14 +48,9 @@
         <p><strong>Entrada:</strong> {{ formatFecha(reserva.diaEntrada) }}</p>
         <p><strong>Salida:</strong> {{ formatFecha(reserva.diaSalida) }}</p>
 
-        <ion-button expand="block" color="primary" (click)="mostrarTicket(reserva)" class="mb-2">
-          <ion-icon slot="start" name="document-text-outline"></ion-icon>
+        <!-- Botón Mostrar Ticket -->
+        <ion-button expand="block" class="btn-ticket" (click)="mostrarTicket(reserva)">
           Mostrar Ticket
-        </ion-button>
-
-        <ion-button expand="block" color="danger" (click)="confirmarEliminar(reserva)">
-          <ion-icon slot="start" name="trash-outline"></ion-icon>
-          Eliminar Reserva
         </ion-button>
       </ion-card-content>
     </ion-card>

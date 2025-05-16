@@ -1,27 +1,30 @@
 ion-header {
-  background-color: #084c61;
+  background-color: #000000; /* Negro */
   padding: 10px;
 }
 
 ion-toolbar {
-  --background: #084c61;
-  --color: #fff;
+  --background: #000000; /* Negro */
+  --color: #ffb826;       /* Dorado */
   text-align: center;
 }
 
 .dark-icon {
-  color: #323031;
+  color: black; /* Gris oscuro */
 }
 
 ion-title {
-  color: white;
+  color: #ffb826; /* Dorado */
   font-size: 1.8rem;
   font-weight: bold;
 }
 
 ion-content {
   --background: none;
-  background: linear-gradient(to bottom, #e0f7fa, #ffffff);
+  background-image: url('/assets/img/fondo.jpg'); /* Imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,6 +41,9 @@ ion-content {
   width: 100%;
   text-align: center;
   padding: 20px;
+  background-color: rgba(201, 194, 185, 0.466); /* Beige translúcido */
+  border-radius: 10px;
+  max-width: 400px;
 }
 
 form {
@@ -57,8 +63,8 @@ img {
 }
 
 ion-item {
-  --background: #d3f4f7;
-  --color: #323031;
+  --background: #c9c2b9; /* Beige */
+  --color: #000000;      /* Negro */
   border-radius: 5px;
   width: 85%;
   max-width: 350px;
@@ -66,41 +72,97 @@ ion-item {
   padding: 5px;
   display: flex;
   align-items: center;
+  --highlight-color-focused: transparent;
+  --highlight-color-valid: transparent;
+  --highlight-color-invalid: transparent;
+  --border-color: transparent;
+  --inner-border-width: 0;
+  --inner-padding-end: 0;
 }
 
 ion-label {
   font-size: 1rem;
-  color: #177e89;
+  color: #96551d; /* Marrón */
   flex-grow: 1;
 }
 
 ion-input {
-  color: #323031;
+  color: #000000; /* Negro */
   font-size: 1rem;
   padding: 8px;
   flex-grow: 1;
 }
 
-ion-button {
-  width: 90%;
-  max-width: 350px;
-  font-size: 1rem;
-  margin-top: 8px;
-  --border-radius: 20px;
+.form{
+  padding-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-ion-button::part(native) {
-  border-radius: 30px;
+
+
+.btn-donate {
+  width: 60%;
+  --clr-font-main: hsla(0 0% 20% / 100);
+  --btn-bg-1: rgb(119, 122, 122);
+  --btn-bg-2: rgb(0, 0, 0);
+  --btn-bg-color: hsla(360 100% 100% / 1);
+  --radii: 0.5em;
+  cursor: pointer;
+  padding: 0.9em 1.4em;
+  min-width: 120px;
+  min-height: 44px;
+  font-size: var(--size, 1rem);
+  font-weight: 500;
+  transition: 0.8s;
+  background-size: 280% auto;
+  background-image: linear-gradient(
+    325deg,
+    var(--btn-bg-2) 0%,
+    var(--btn-bg-1) 55%,
+    var(--btn-bg-2) 90%
+  );
+  border: none;
+  border-radius: var(--radii);
+  color: var(--btn-bg-color);
+  box-shadow:
+    0px 0px 20px rgba(66, 69, 71, 0.5),
+    0px 5px 5px -1px rgba(13, 19, 27, 0.25),
+    inset 4px 4px 8px rgba(118, 123, 126, 0.5),
+    inset -4px -4px 8px rgba(0, 0, 0, 0.35);
 }
 
-/* Primer botón (por ejemplo: registrar / aceptar) */
-ion-button:first-of-type {
-  --background: #177e89;
-  --color: #ffffff;
+.btn-donate:hover {
+  background-position: right top;
 }
 
-/* Último botón (por ejemplo: cancelar / volver) */
-ion-button:last-of-type { 
-  --background: #084c61;
-  --color: #ffffff;
+
+.profile-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc; /* opcional: puedes quitarlo o personalizarlo */
+  margin: auto;
+  display: block;
+  margin-top: -50px;
 }
+.btn-donate:active {
+  background-position: right top;
+}
+
+.btn-donate:is(:focus, :focus-visible, :active) {
+  outline: none;
+  box-shadow:
+    0 0 0 3px var(--btn-bg-color),
+    0 0 0 6px var(--btn-bg-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-donate {
+    transition: linear;
+  }
+}
+

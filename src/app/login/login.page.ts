@@ -14,8 +14,8 @@ import { UserService } from '../services/user.service';
   imports: [CommonModule, IonicModule, FormsModule],
 })
 export class LoginPage implements OnInit {
-  username: string = '';
-  password: string = '';
+  username: string = 'q@gmail.com';
+  password: string = 'q';
   passwordType: string = 'password';
   errorMessage: string = '';
 
@@ -40,7 +40,7 @@ export class LoginPage implements OnInit {
     const toast = await this.toastController.create({
       message,
       duration: 3000,
-      position: 'bottom',
+      position: 'top',
       color: color,
     });
     toast.present();
