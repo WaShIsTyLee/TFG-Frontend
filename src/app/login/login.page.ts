@@ -14,8 +14,8 @@ import { UserService } from '../services/user.service';
   imports: [CommonModule, IonicModule, FormsModule],
 })
 export class LoginPage implements OnInit {
-  username: string = 'q@gmail.com';
-  password: string = 'q';
+  username: string = 'admin@admin.com';
+  password: string = 'admin';
   passwordType: string = 'password';
   errorMessage: string = '';
 

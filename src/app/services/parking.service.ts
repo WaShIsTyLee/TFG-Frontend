@@ -23,6 +23,7 @@ interface Plaza {
 })
 export class ParkingService {
 
+  private apiUrl2 = 'http://localhost:8080/parking';
   private apiUrl = 'http://localhost:8080/parking/parkings';
   private plazaUrl = 'http://localhost:8080/plaza/plazasDisponibles';
 
@@ -49,4 +50,22 @@ export class ParkingService {
 
     return this.http.get<Plaza[]>(this.plazaUrl, { params });
   }
+  createParking(parking: Parking): Observable<any> {
+  return this.http.post(`${this.apiUrl2}/create`, parking);
+}
+deleteParking(idParking: number) {
+  return this.http.delete(`http://localhost:8080/parking/delete/${idParking}`);
+}
+createPlaza(plaza: { idParking: number; numeroPlaza: string; precioPorHora: number }): Observable<any> {
+  return this.http.post('http://localhost:8080/parking/plaza/create', plaza);
+}
+deletePlaza(idPlaza: number) {
+  return this.http.delete(`http://localhost:8080/plaza/delete/${idPlaza}`, { responseType: 'text' });
+}
+
+getPlazasByParking(idParking: number): Observable<Plaza[]> {
+  return this.http.get<Plaza[]>(`http://localhost:8080/plaza/porParking/${idParking}`);
+}
+
+
 }

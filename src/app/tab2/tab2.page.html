@@ -15,25 +15,45 @@
             <ion-card-content>
               <p>{{ parking.ubicacion }}</p>
 
-              <!-- Nuevo botón: abrir mapa en modal -->
-              <ion-button expand="block"
-                          class="btn-ticket"
-                          (click)="openMapaModal(parking)">
+              <!-- Botón para ver el mapa -->
+              <ion-button expand="block" class="btn-ticket" (click)="openMapaModal(parking)">
                 Ver mapa
               </ion-button>
 
-              <!-- Botón de reservar -->
-              <ion-button expand="block"
-                          class="btn-eliminar"
-                          (click)="loadPlazas(parking.idParking)">
+              <!-- Botón para reservar -->
+              <ion-button expand="block" class="btn-eliminar" (click)="loadPlazas(parking.idParking)">
                 Reservar
               </ion-button>
 
-              <!-- Quitamos el div del mapa que antes estaba aquí -->
+              <!-- Botón para añadir plaza, visible solo para admins -->
+              <ion-button *ngIf="isAdmin" expand="block" class="btn-ticket" color="success"
+                (click)="addPlaza(parking.idParking)">
+                Añadir plaza
+              </ion-button>
+
+              <!-- Botón para eliminar parking, solo admins -->
+              <ion-button *ngIf="isAdmin" expand="block" class="btn-ticket" color="danger"
+                (click)="deleteParking(parking.idParking)">
+                Eliminar
+              </ion-button>
+
+              <!-- Botón para borrar plazas, solo admins y si hay plazas -->
+              <ion-button *ngIf="isAdmin && getPlazasPorParking(parking.idParking).length > 0" class="btn-ticket" color="danger" expand="block" 
+                (click)="showDeletePlazasAlert(parking.idParking)">
+                Borrar plazas
+              </ion-button>
+
             </ion-card-content>
           </ion-card>
         </ion-col>
       </ng-container>
     </ion-row>
   </ion-grid>
+
+  <!-- Botón flotante para añadir parking, visible solo para admins -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="isAdmin">
+    <ion-fab-button (click)="addParking()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
