@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { IonicModule } from '@ionic/angular';
-import { TaxiService, Taxi } from '../services/taxi.service'; // Ajusta la ruta si es necesario
+import { TaxiService, Taxi } from '../services/taxi.service'; 
 
 @Component({
   imports: [
@@ -16,25 +16,23 @@ export class Tab5Page implements OnInit {
 
   taxisAdaptados: Taxi[] = [];
   taxisNoAdaptados: Taxi[] = [];
-  ciudadSeleccionada: string = ''; // Nueva propiedad para la ciudad seleccionada
-  ciudades: string[] = ['Madrid', 'Málaga', 'Bilbao','Alicante','Valencia','Barcelona','Mallorca']; // Ejemplo de lista de ciudades
+  ciudadSeleccionada: string = ''; 
+  ciudades: string[] = ['Madrid', 'Málaga', 'Bilbao','Alicante','Valencia','Barcelona','Mallorca']; 
 
   constructor(private taxiService: TaxiService) {}
 
   ngOnInit() {
-    this.cargarTaxis(); // Cargar los taxis inicialmente
+    this.cargarTaxis(); 
   }
 
   // Método para cargar los taxis según la ciudad seleccionada
   cargarTaxis() {
     if (this.ciudadSeleccionada) {
       this.taxiService.getTaxisByCiudad(this.ciudadSeleccionada).subscribe(data => {
-        // Separar los taxis en adaptados y no adaptados
         this.taxisAdaptados = data.filter(taxi => taxi.adaptado);
         this.taxisNoAdaptados = data.filter(taxi => !taxi.adaptado);
       });
     } else {
-      // Si no hay ciudad seleccionada, cargar todos los taxis
       this.taxiService.getTaxisAdaptados().subscribe(data => {
         this.taxisAdaptados = data;
       });
@@ -47,10 +45,10 @@ export class Tab5Page implements OnInit {
 
   // Método para manejar el cambio en el selector de ciudad
   onCiudadChange() {
-    this.cargarTaxis(); // Llamamos al método para filtrar taxis por ciudad
+    this.cargarTaxis(); 
   }
 
   llamarTaxi(telefono: string) {
-    window.open(`tel:${telefono}`, '_system'); // Funciona tanto en navegador como en dispositivo móvil
+    window.open(`tel:${telefono}`, '_system'); 
   }
 }

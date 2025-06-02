@@ -19,27 +19,25 @@ interface Plaza {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root'  
 })
 export class ParkingService {
 
-  private apiUrl2 = 'http://localhost:8080/parking';
-  private apiUrl = 'http://localhost:8080/parking/parkings';
-  private plazaUrl = 'http://localhost:8080/plaza/plazasDisponibles';
+  private baseUrl = 'http://localhost:8080';  // URL base para todas las peticiones
 
   constructor(private http: HttpClient) {}
 
-  // Método para obtener todos los parkings
+  // Obtiene todos los parkings disponibles
   getParkings(): Observable<Parking[]> {
-    return this.http.get<Parking[]>(this.apiUrl);
+    return this.http.get<Parking[]>(`${this.baseUrl}/parking/parkings`);
   }
 
-  // Método para obtener un parking específico
+  // Obtiene la información de un parking específico por su ID
   getParking(id: number): Observable<Parking> {
-    return this.http.get<Parking>(`${this.apiUrl}/${id}`);
+    return this.http.get<Parking>(`${this.baseUrl}/parking/parkings/${id}`);
   }
 
-  // Método para obtener plazas disponibles filtradas por idParking y fechas
+  // Obtiene plazas disponibles en un parking, opcionalmente filtradas por fechas
   getPlazasDisponibles(idParking: number, fechaInicio?: string, fechaFin?: string): Observable<Plaza[]> {
     let params: any = { idParking };
 
@@ -48,24 +46,31 @@ export class ParkingService {
       params.fechaFin = fechaFin;
     }
 
-    return this.http.get<Plaza[]>(this.plazaUrl, { params });
+    return this.http.get<Plaza[]>(`${this.baseUrl}/plaza/plazasDisponibles`, { params });
   }
+
+  // Crea un nuevo parking
   createParking(parking: Parking): Observable<any> {
-  return this.http.post(`${this.apiUrl2}/create`, parking);
-}
-deleteParking(idParking: number) {
-  return this.http.delete(`http://localhost:8080/parking/delete/${idParking}`);
-}
-createPlaza(plaza: { idParking: number; numeroPlaza: string; precioPorHora: number }): Observable<any> {
-  return this.http.post('http://localhost:8080/parking/plaza/create', plaza);
-}
-deletePlaza(idPlaza: number) {
-  return this.http.delete(`http://localhost:8080/plaza/delete/${idPlaza}`, { responseType: 'text' });
-}
+    return this.http.post(`${this.baseUrl}/parking/create`, parking);
+  }
 
-getPlazasByParking(idParking: number): Observable<Plaza[]> {
-  return this.http.get<Plaza[]>(`http://localhost:8080/plaza/porParking/${idParking}`);
-}
+  // Elimina un parking por ID
+  deleteParking(idParking: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/parking/delete/${idParking}`);
+  }
 
+  // Crea una nueva plaza en un parking
+  createPlaza(plaza: { idParking: number; numeroPlaza: string; precioPorHora: number }): Observable<any> {
+    return this.http.post(`${this.baseUrl}/parking/plaza/create`, plaza);
+  }
 
+  // Elimina una plaza por su ID
+  deletePlaza(idPlaza: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/plaza/delete/${idPlaza}`, { responseType: 'text' });
+  }
+
+  // Obtiene todas las plazas de un parking específico
+  getPlazasByParking(idParking: number): Observable<Plaza[]> {
+    return this.http.get<Plaza[]>(`${this.baseUrl}/plaza/porParking/${idParking}`);
+  }
 }

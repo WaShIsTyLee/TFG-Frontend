@@ -9,13 +9,13 @@ export class UtilsService {
 
   async takePicture(promptLabelHeader: string) {
     try {
-      // Usamos el plugin de cámara de Capacitor para capturar una imagen
+    
       const photo = await Camera.getPhoto({
         quality: 90,
         allowEditing: true,
-        resultType: CameraResultType.DataUrl, // Queremos la imagen en formato base64
-        source: CameraSource.Prompt, // Permite al usuario elegir entre cámara o galería
-        promptLabelHeader: promptLabelHeader, // Título del prompt
+        resultType: CameraResultType.DataUrl, 
+        source: CameraSource.Prompt, 
+        promptLabelHeader: promptLabelHeader, 
         promptLabelPhoto: 'Selecciona una imagen',
         promptLabelPicture: 'Saca una foto',
       });

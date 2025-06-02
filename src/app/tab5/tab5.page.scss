@@ -69,11 +69,16 @@ ion-card-content {
 
 /* Título de sección general */
 .titulo-seccion {
-  color: #000000;
+  color: #96551d;
+  
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800;
   font-size: 1.5rem;
-  font-weight: bold;
-  margin: 20px 0 10px 0;
+  letter-spacing: 2px;
+  width: 100%;
   text-align: center;
+  margin: 2rem 0 1rem 0;
+  z-index: 10;
 }
 
 /* Botón genérico */

@@ -1,63 +1,79 @@
 <ion-header>
-  <ion-title>Perfil</ion-title>
+  <ion-title>Perfil</ion-title>  <!-- Título fijo en la parte superior -->
 </ion-header>
 
-<ion-content class="login-background">
+<ion-content class="login-background">  <!-- Contenedor principal con fondo personalizado -->
   <div class="form">
-    <div class="content-wrapper" *ngIf="usuarioActual">
+    <div class="content-wrapper" *ngIf="usuarioActual">  <!-- Solo muestra el contenido si hay usuario cargado -->
+
+      <!-- Imagen de perfil: si hay foto, la muestra; si no, muestra un texto alternativo -->
       <img *ngIf="fotoPerfil; else sinFoto" [src]="fotoPerfil" alt="Foto de perfil" class="login-icon" />
       <ng-template #sinFoto>
         <p style="color: #333;"><em>Sin foto de perfil</em></p>
       </ng-template>
 
+      <!-- Campo para editar nombre -->
       <ion-item>
         <ion-icon slot="start" name="person-outline" class="dark-icon"></ion-icon>
         <ion-label position="floating">Nombre</ion-label>
         <ion-input [(ngModel)]="usuarioActual.name" type="text"></ion-input>
       </ion-item>
 
+      <!-- Campo para editar email -->
       <ion-item>
         <ion-icon slot="start" name="mail-outline" class="dark-icon"></ion-icon>
         <ion-label position="floating">Email</ion-label>
         <ion-input [(ngModel)]="usuarioActual.email" type="email"></ion-input>
       </ion-item>
+
+      <!-- Campo para editar contraseña -->
       <ion-item>
         <ion-icon slot="start" name="lock-closed-outline" class="dark-icon"></ion-icon>
         <ion-label position="floating">Contraseña</ion-label>
         <ion-input [(ngModel)]="usuarioActual.password" type="password"></ion-input>
       </ion-item>
+
+      <!-- Campo para editar teléfono -->
       <ion-item>
         <ion-icon slot="start" name="call-outline" class="dark-icon"></ion-icon>
         <ion-label position="floating">Teléfono</ion-label>
         <ion-input [(ngModel)]="usuarioActual.phone" type="tel"></ion-input>
       </ion-item>
+
+      <!-- Campo para mostrar saldo en monedero (solo lectura) -->
       <ion-item>
         <ion-icon slot="start" name="wallet-outline" class="dark-icon"></ion-icon>
         <ion-label position="floating">Monedero</ion-label>
         <ion-input [(ngModel)]="usuarioActual.monedero" type="text" readonly></ion-input>
       </ion-item>
+
+      <!-- Campo para agregar fondos (input editable) -->
       <ion-item>
         <ion-icon slot="start" name="cash-outline" class="dark-icon"></ion-icon>
         <ion-label position="floating">Añadir fondos</ion-label>
         <ion-input [(ngModel)]="fondosAAgregar" type="number"></ion-input>
       </ion-item>
 
+      <!-- Botón para agregar fondos al monedero -->
       <ion-button expand="full" color="success" (click)="agregarFondos()">
         Añadir al monedero
       </ion-button>
 
-
+      <!-- Botón para tomar o cambiar la foto de perfil -->
       <ion-button expand="full" (click)="takeProfilePhoto()">
         Cambiar foto
       </ion-button>
 
+      <!-- Botón para guardar los cambios del perfil -->
       <ion-button expand="full" (click)="updateUserProfile()">
         Guardar cambios
       </ion-button>
 
+      <!-- Botón para cerrar sesión -->
       <ion-button expand="full" (click)="logout()">
         Cerrar sesión
       </ion-button>
+
     </div>
   </div>
 </ion-content>

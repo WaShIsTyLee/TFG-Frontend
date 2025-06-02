@@ -1,0 +1,114 @@
+<!-- Contenedor principal de la página con scroll -->
+<ion-content> 
+  <div class="page-wrapper">
+
+    <!-- Inputs ocultos para controlar la vista (login o registro) -->
+    <input type="radio" name="toggle" id="toggle-login" checked hidden>
+    <input type="radio" name="toggle" id="toggle-register" hidden>
+
+    <div class="content-wrapper">
+      <div class="forms-wrapper">
+
+        <!-- Sección para iniciar sesión -->
+        <section id="section-login" class="section">
+          <div class="image-container"></div> <!-- Contenedor para imagen decorativa -->
+          <div class="form-container">
+            <!-- Título principal -->
+            <h1>FlyPark</h1>
+            <!-- Logo de la aplicación -->
+            <img src="./assets/img/FlyParkLogo.png" alt="FlyPark" class="logo" />
+            <!-- Subtítulo del formulario -->
+            <h2>Iniciar Sesión</h2>
+
+            <!-- Formulario de inicio de sesión -->
+            <div class="fondoForm">
+              <!-- Campo para correo -->
+              <ion-item>
+                <ion-icon slot="start" name="mail-outline"></ion-icon>
+                <ion-label position="floating">Correo</ion-label>
+                <ion-input [(ngModel)]="username" name="username" type="text" required></ion-input>
+              </ion-item>
+
+              <!-- Campo para contraseña con botón para mostrar/ocultar -->
+              <ion-item>
+                <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+                <ion-label position="floating">Contraseña</ion-label>
+                <ion-input [(ngModel)]="password" name="password" [type]="showPassword ? 'text' : 'password'" required></ion-input>
+                <ion-button fill="clear" slot="end" (click)="togglePasswordVisibility()">
+                  <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+                </ion-button>
+              </ion-item>
+            </div>
+
+            <!-- Botón para enviar formulario de inicio de sesión -->
+            <button class="btn-donate" (click)="login()">Iniciar Sesión</button>
+
+            <!-- Enlace para cambiar a la sección de registro -->
+            <label for="toggle-register" class="toggle-link">Registrarse</label>
+          </div>
+        </section>
+
+        <!-- Sección para registrarse -->
+        <section id="section-register" class="section">
+          <div class="image-container"></div> <!-- Contenedor para imagen decorativa -->
+          <div class="form-container">
+            <!-- Título principal -->
+            <h1>FlyPark</h1>
+            <!-- Logo de la aplicación -->
+            <img src="./assets/img/FlyParkLogo.png" alt="FlyPark" class="logo" />
+            <!-- Subtítulo del formulario -->
+            <h2>Registrarse</h2>
+
+            <!-- Formulario de registro con campos para datos personales -->
+            <div class="fondoForm">
+              <ion-item>
+                <ion-icon slot="start" name="person-outline"></ion-icon>
+                <ion-label position="floating">Nombre</ion-label>
+                <ion-input [(ngModel)]="nombre" name="nombre" type="text" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-icon slot="start" name="mail-outline"></ion-icon>
+                <ion-label position="floating">Email</ion-label>
+                <ion-input [(ngModel)]="email" name="email" type="email" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+                <ion-label position="floating">Contraseña</ion-label>
+                <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-icon slot="start" name="call-outline"></ion-icon>
+                <ion-label position="floating">Teléfono</ion-label>
+                <ion-input [(ngModel)]="telefono" name="telefono" type="tel" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-icon slot="start" name="wallet-outline"></ion-icon>
+                <ion-label position="floating">Monedero</ion-label>
+                <ion-input [(ngModel)]="monedero" name="monedero" type="number" required></ion-input>
+              </ion-item>
+            </div>
+
+            <!-- Botón para tomar foto y vista previa de la foto tomada -->
+            <div class="foto-container" style="text-align: center; margin: 1rem 0;">
+              <button class="btn-donate" (click)="tomarFoto()">Tomar Foto</button>
+              <div *ngIf="fotoBase64" style="margin-top: 1rem;">
+                <img [src]="fotoBase64" alt="Foto tomada" style="max-width: 200px; border-radius: 10px;" />
+              </div>
+            </div>
+
+            <!-- Botón para enviar formulario de registro -->
+            <button class="btn-donate" (click)="registrar()">Registrarse</button>
+
+            <!-- Enlace para cambiar a la sección de inicio de sesión -->
+            <label for="toggle-login" class="toggle-link">Ya tengo cuenta</label>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</ion-content>

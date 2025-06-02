@@ -1,28 +1,28 @@
 ion-content {
   --background: none;
-  background: linear-gradient(to bottom, #c9c2b9, #ffffff); /* De beige a blanco */
+  background: linear-gradient(to bottom, #c9c2b9, #ffffff); // De beige a blanco
 }
 
 ion-header,
 ion-toolbar {
-  background: transparent; /* Negro */
-  --color: #ffb826;      /* Dorado */
+  background: transparent;
+  --color: #ffb826;
   text-align: center;
   padding: 10px;
 }
 
 ion-title {
-  color: white; /* Dorado */
+  color: white;
   font-size: 1.8rem;
   font-weight: bold;
 }
 
 ion-card {
-  background: #c9c2b9; /* Beige */
-  color: #000000;      /* Negro */
-  width: 100%;
-  max-width: 530px;
-  margin-top: 20px;
+  background: #c9c2b9;
+  color: #000000;
+  width: 90%;
+  max-width: 500px;
+  margin: 10px auto;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -30,12 +30,12 @@ ion-card {
 }
 
 ion-card-header {
-  background-color: #000000; /* Negro */
+  background-color: #222; // Negro más claro
   border-radius: 12px 12px 0 0;
 }
 
 ion-card-title {
-  color: white; /* Dorado */
+  color: white;
   font-size: 1.4rem;
   padding: 10px;
 }
@@ -49,7 +49,6 @@ ion-card-content {
   color: #000000;
 }
 
-/* Botones */
 ion-button {
   align-items: center;
   width: 100%;
@@ -59,17 +58,34 @@ ion-button {
 }
 
 .btn-ticket {
-  
-  align-items: center;
-  width: 50%;
-  --background: black; /* Dorado */
-  --color: #ffb826;      /* Negro */
+  --background: #222; // Negro más claro
+  --color: #ffffff;
 }
 
 .btn-eliminar {
-  align-items: center;
-  width: 50%;
-  --background: #ffb826; /* Granate elegante */
-  --color: #ffffff;      /* Blanco */
+  --background: #ffb826; // Dorado
+  --color: #ffffff;
 }
 
+/* Slides */
+ion-slides {
+  height: auto;
+}
+
+ion-slide {
+  display: flex;
+  justify-content: center;
+}
+
+h2 {
+  color: #96551d;
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  width: 100%;
+  text-align: center;
+  margin: 2rem 0 1rem 0;
+  z-index: 10;
+}
