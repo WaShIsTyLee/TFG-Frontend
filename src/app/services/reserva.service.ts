@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class ReservaService {
 
   // URL base para las llamadas relacionadas con reservas en la API
-  private apiBase = 'http://localhost:8080/api/reservas';
+  private apiBase = 'http://3.92.105.120:8080/api/reservas';
 
   constructor(private http: HttpClient) { }
 

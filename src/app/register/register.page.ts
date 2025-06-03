@@ -77,7 +77,7 @@ export class RegisterPage {
       foto: this.fotoBase64
     };
   
-    this.http.post('http://localhost:8080/usuario/register', usuario).subscribe({
+    this.http.post('http://3.92.105.120:8080/usuario/register', usuario).subscribe({
       next: async () => {
         this.mostrarToast('✅ Registro exitoso. Ya puedes iniciar sesión.', 'success');
         this.router.navigateByUrl('/login');

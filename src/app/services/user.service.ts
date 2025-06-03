@@ -7,7 +7,7 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root' // Servicio disponible en toda la app
 })
 export class UserService {
-  private apiUrl = 'http://localhost:8080/usuario';  // URL base para usuario
+  private apiUrl = 'http://3.92.105.120:8080/usuario';  // URL base para usuario
   private userSubject = new BehaviorSubject<any>(null);  // Estado reactivo para el usuario
 
   constructor(private http: HttpClient) { }

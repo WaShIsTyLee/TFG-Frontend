@@ -17,7 +17,7 @@ export interface Taxi {
 export class TaxiService {
 
   // URL base para las peticiones relacionadas con taxis
-  private baseUrl = 'http://localhost:8080/taxis'; // Cambiar el puerto si es necesario
+  private baseUrl = 'http://3.92.105.120:8080/taxis'; // Cambiar el puerto si es necesario
 
   constructor(private http: HttpClient) {}
 

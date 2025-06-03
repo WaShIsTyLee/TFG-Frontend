@@ -23,7 +23,7 @@ interface Plaza {
 })
 export class ParkingService {
 
-  private baseUrl = 'http://localhost:8080';  // URL base para todas las peticiones
+  private baseUrl = 'http://3.92.105.120:8080';  // URL base para todas las peticiones
 
   constructor(private http: HttpClient) {}
 
