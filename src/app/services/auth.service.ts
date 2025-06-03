@@ -15,7 +15,7 @@ export interface Usuario {
   providedIn: 'root' // Hace que el servicio sea accesible en toda la aplicación
 })
 export class AuthService {
-private apiUrl = 'http://3.92.105.120:8080/usuario';
+  private apiUrl = 'http://localhost:8080/usuario'; // URL base para las peticiones al backend
 
   constructor(private http: HttpClient) {}
 
