@@ -1,77 +1,239 @@
-ion-content {
-  --background: none;
-  background: linear-gradient(to bottom, #c9c2b9, #ffffff); /* De beige a blanco */
+/* Fondo principal con tema oscuro */
+.dark-background {
+  --background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  height: 100%;
+  overflow-y: auto;
 }
 
-ion-header,
-ion-toolbar {
-  background: transparent;
-  --color: #ffb826; /* Dorado */
+/* Header con tema oscuro ultra compacto */
+.header-dark {
+  background: rgba(30, 30, 50, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  height: 45px;
+}
+
+.header-dark ion-toolbar {
+  --background: transparent;
+  --color: #f1f5f9;
+  --min-height: 45px;
+  --padding-top: 0;
+  --padding-bottom: 0;
+}
+
+.header-dark ion-title {
+  color: #f1f5f9;
+  font-size: 1.1rem;
+  font-weight: 600;
   text-align: center;
-  padding: 10px;
+  padding: 0;
 }
 
-ion-title {
-  color: white;
-  font-size: 1.8rem;
-  font-weight: bold;
+/* Contenedor principal de vuelos */
+.flights-container {
+  padding: 0.6rem;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-ion-card {
-  background: #c9c2b9; /* Beige */
-  color: #000000;      /* Negro */
-  width: 100%;
-  max-width: 530px;
-  margin-top: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
+/* Estilos para ion-item con tema oscuro */
+.selector-item {
+  --background: rgba(51, 65, 85, 0.6);
+  --color: #e2e8f0;
+  --border-radius: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --min-height: 44px;
+  background-color: rgba(51, 65, 85, 0.6) !important;
+  color: #e2e8f0;
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 8px;
+  margin: 0.5rem 0;
+  font-size: 0.85rem;
 }
 
-ion-card-header {
-  background-color: #000000; /* Negro */
-  border-radius: 12px 12px 0 0;
+.selector-item ion-label {
+  color: #cbd5e1 !important;
+  font-weight: 400;
+  font-size: 0.8rem;
 }
 
-ion-card-title {
-  color: white;
-  font-size: 1.4rem;
-  padding: 10px;
+.selector-item ion-select {
+  color: #f1f5f9;
+  font-size: 0.8rem;
+  --placeholder-color: #94a3b8;
 }
 
-ion-card-content {
-  align-items: center;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  color: #000000;
+/* Searchbars con tema oscuro */
+.custom-searchbar {
+  --background: rgba(51, 65, 85, 0.6);
+  --color: #f1f5f9;
+  --placeholder-color: #94a3b8;
+  --icon-color: #94a3b8;
+  --border-radius: 8px;
+  --box-shadow: none;
+  margin: 0.5rem 0;
+  height: 44px;
+  font-size: 0.8rem;
+  border: 1px solid rgba(71, 85, 105, 0.3);
 }
 
-ion-searchbar {
-  color: #000;
-  --background: #ffffff;
-  --border-radius: 25px;
-  margin: 10px 0;
+/* Cards de vuelos con tema oscuro */
+.flight-card {
+  background: rgba(30, 41, 59, 0.8) !important;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  margin: 0.5rem 0;
+  animation: fadeIn 0.4s ease forwards;
 }
 
-ion-searchbar input {
-  font-size: 1.2rem;
+.flight-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
-ion-button {
-  align-items: center;
-  width: 100%;
+/* Header de la card */
+.card-header {
+  background: rgba(51, 65, 85, 0.6) !important;
+  padding: 0.8rem !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.flight-title {
+  color: #f1f5f9 !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  margin: 0 !important;
+  line-height: 1.2;
+}
+
+/* Contenido de la card */
+.card-content {
+  padding: 0.8rem !important;
+  background: transparent !important;
+}
+
+.flight-info {
+  color: #e2e8f0;
+  font-size: 0.8rem;
+  margin: 0.4rem 0;
+  line-height: 1.4;
+}
+
+.flight-info strong {
+  color: #cbd5e1;
+  font-weight: 500;
+}
+
+/* Estado vacío */
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  color: #64748b;
+  margin-bottom: 0.8rem;
+}
+
+.empty-text {
+  color: #cbd5e1;
   font-size: 1rem;
-  --border-radius: 20px;
-  margin-top: 10px;
+  font-weight: 500;
+  margin: 0;
 }
 
-/* Botón "Ver detalles" */
-.btn-view-details {
-  align-items: center;
-  width: 50%;
-  --background: #ffb826; /* Dorado */
-  --color: #000000;      /* Negro */
+/* Responsive Design */
+@media (max-width: 768px) {
+  .flights-container {
+    padding: 0.5rem;
+  }
+
+  .flight-card {
+    margin: 0.3rem 0;
+  }
+
+  .flight-title {
+    font-size: 0.9rem !important;
+  }
+
+  .flight-info {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .flights-container {
+    padding: 0.3rem;
+  }
+
+  .card-header {
+    padding: 0.6rem !important;
+  }
+
+  .card-content {
+    padding: 0.6rem !important;
+  }
+
+  .flight-title {
+    font-size: 0.85rem !important;
+  }
+
+  .flight-info {
+    font-size: 0.7rem;
+    margin: 0.3rem 0;
+  }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scrollbar personalizado */
+ion-content::-webkit-scrollbar {
+  width: 3px;
+}
+
+ion-content::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.5);
+}
+
+ion-content::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 1.5px;
+}
+
+ion-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+/* Optimización para pantallas de altura limitada */
+@media (max-height: 700px) {
+  .flights-container {
+    padding: 0.4rem;
+  }
+
+  .flight-card {
+    margin: 0.3rem 0;
+  }
 }

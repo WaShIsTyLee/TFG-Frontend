@@ -1,106 +1,135 @@
-<ion-header>
-  <ion-title>Parkings</ion-title>
+<ion-header class="header-dark">
+  <ion-toolbar>
+    <ion-title>Parkings</ion-title>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="dark-background" [ngClass]="{'isAdmin': isAdmin}">
   <!-- Primera sección: Parkings cercanos -->
-  <ion-grid>
-    <ion-row>
-      <ion-col size="12">
-        <h2 class="section-title">Parkings Cercanos</h2>
-      </ion-col>
+  <div class="section-container">
+    <h2 class="titulo-seccion">
+      <ion-icon name="location-outline" class="section-icon"></ion-icon>
+      Parkings Cercanos
+    </h2>
 
-      <!-- Si hay parkings cercanos los mostramos -->
-      <ng-container *ngIf="parkingsCercanos.length > 0; else noCercanos">
-        <ng-container *ngFor="let parking of parkingsCercanos">
-          <ion-col size="12" size-md="6" size-lg="4">
-            <ion-card>
-              <ion-card-header>
-                <ion-card-title>{{ parking.nombre }}</ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                <p>{{ parking.ubicacion }}</p>
-                
-                <!-- Botón para abrir un modal con mapa -->
-                <ion-button expand="block" class="btn-ticket" (click)="openMapaModal(parking)">
-                  Ver mapa
-                </ion-button>
-                
-                <!-- Botón para cargar plazas y reservar -->
-                <ion-button expand="block" class="btn-eliminar" (click)="loadPlazas(parking.idParking)">
-                  Reservar
-                </ion-button>
-                
-                <!-- Botones visibles solo si el usuario es admin -->
-                <ion-button *ngIf="isAdmin" expand="block" class="btn-ticket" (click)="addPlaza(parking.idParking)">
-                  Añadir plaza
-                </ion-button>
-                <ion-button *ngIf="isAdmin" expand="block" class="btn-ticket" (click)="deleteParking(parking.idParking)">
-                  Eliminar
-                </ion-button>
-                
-                <!-- Mostrar botón para borrar plazas solo si hay plazas y es admin -->
-                <ion-button *ngIf="isAdmin && getPlazasPorParking(parking.idParking).length > 0" class="btn-ticket" expand="block" (click)="showDeletePlazasAlert(parking.idParking)">
-                  Borrar plazas
-                </ion-button>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-        </ng-container>
-      </ng-container>
+    <!-- Si hay parkings cercanos los mostramos -->
+    <div *ngIf="parkingsCercanos.length > 0; else noCercanos" class="card-container">
+      <div *ngFor="let parking of parkingsCercanos" class="parking-card">
+        <div class="card-header">
+          <h3 class="parking-name">{{ parking.nombre }}</h3>
+          <div class="distance-badge">Cercano</div>
+        </div>
+        
+        <div class="card-content">
+          <p class="parking-location">
+            <ion-icon name="location-outline"></ion-icon>
+            {{ parking.ubicacion }}
+          </p>
+        </div>
 
-      <!-- Mensaje si no hay parkings cercanos -->
-      <ng-template #noCercanos>
-        <ion-col size="12">
-          <p>No hay parkings cercanos a tu ubicación.</p>
-        </ion-col>
-      </ng-template>
-    </ion-row>
-  </ion-grid>
+        <div class="card-actions">
+          <button class="btn-map" (click)="openMapaModal(parking)">
+            <ion-icon name="map-outline"></ion-icon>
+            <span>Ver Mapa</span>
+          </button>
+
+          <button class="btn-reserve" (click)="loadPlazas(parking.idParking)">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <span>Reservar</span>
+          </button>
+
+          <!-- Botones de administrador -->
+          <div *ngIf="isAdmin" class="admin-actions">
+            <button class="btn-add" (click)="addPlaza(parking.idParking)">
+              <ion-icon name="add-circle-outline"></ion-icon>
+              <span>Añadir Plaza</span>
+            </button>
+
+            <button class="btn-delete" (click)="deleteParking(parking.idParking)">
+              <ion-icon name="trash-outline"></ion-icon>
+              <span>Eliminar</span>
+            </button>
+
+            <button *ngIf="getPlazasPorParking(parking.idParking).length > 0" 
+                    class="btn-remove" 
+                    (click)="showDeletePlazasAlert(parking.idParking)">
+              <ion-icon name="remove-circle-outline"></ion-icon>
+              <span>Borrar Plazas</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensaje si no hay parkings cercanos -->
+    <ng-template #noCercanos>
+      <div class="empty-state">
+        <ion-icon name="location-outline" class="empty-icon"></ion-icon>
+        <p class="empty-text">No hay parkings cercanos</p>
+      </div>
+    </ng-template>
+  </div>
 
   <!-- Segunda sección: Todos los parkings -->
-  <ion-grid>
-    <ion-row>
-      <ion-col size="12">
-        <h2 class="section-title">Todos los Parkings</h2>
-      </ion-col>
+  <div class="section-container">
+    <h2 class="titulo-seccion">
+      <ion-icon name="business-outline" class="section-icon"></ion-icon>
+      Todos los Parkings
+    </h2>
 
-      <!-- Listamos todos los parkings sin filtro -->
-      <ng-container *ngFor="let parking of parkings">
-        <ion-col size="12" size-md="6" size-lg="4">
-          <ion-card>
-            <ion-card-header>
-              <ion-card-title>{{ parking.nombre }}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <p>{{ parking.ubicacion }}</p>
-              <ion-button expand="block" class="btn-ticket" (click)="openMapaModal(parking)">
-                Ver mapa
-              </ion-button>
-              <ion-button expand="block" class="btn-eliminar" (click)="loadPlazas(parking.idParking)">
-                Reservar
-              </ion-button>
-              <ion-button *ngIf="isAdmin" expand="block" class="btn-ticket" (click)="addPlaza(parking.idParking)">
-                Añadir plaza
-              </ion-button>
-              <ion-button *ngIf="isAdmin" expand="block" class="btn-ticket" (click)="deleteParking(parking.idParking)">
-                Eliminar
-              </ion-button>
-              <ion-button *ngIf="isAdmin && getPlazasPorParking(parking.idParking).length > 0" class="btn-ticket" expand="block" (click)="showDeletePlazasAlert(parking.idParking)">
-                Borrar plazas
-              </ion-button>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ng-container>
-    </ion-row>
-  </ion-grid>
+    <div class="card-container">
+      <div *ngFor="let parking of parkings" class="parking-card">
+        <div class="card-header">
+          <h3 class="parking-name">{{ parking.nombre }}</h3>
+          <div class="status-badge">Disponible</div>
+        </div>
+        
+        <div class="card-content">
+          <p class="parking-location">
+            <ion-icon name="location-outline"></ion-icon>
+            {{ parking.ubicacion }}
+          </p>
+        </div>
+
+        <div class="card-actions">
+          <button class="btn-map" (click)="openMapaModal(parking)">
+            <ion-icon name="map-outline"></ion-icon>
+            <span>Ver Mapa</span>
+          </button>
+
+          <button class="btn-reserve" (click)="loadPlazas(parking.idParking)">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <span>Reservar</span>
+          </button>
+
+          <!-- Botones de administrador -->
+          <div *ngIf="isAdmin" class="admin-actions">
+            <button class="btn-add" (click)="addPlaza(parking.idParking)">
+              <ion-icon name="add-circle-outline"></ion-icon>
+              <span>Añadir Plaza</span>
+            </button>
+
+            <button class="btn-delete" (click)="deleteParking(parking.idParking)">
+              <ion-icon name="trash-outline"></ion-icon>
+              <span>Eliminar</span>
+            </button>
+
+            <button *ngIf="getPlazasPorParking(parking.idParking).length > 0" 
+                    class="btn-remove" 
+                    (click)="showDeletePlazasAlert(parking.idParking)">
+              <ion-icon name="remove-circle-outline"></ion-icon>
+              <span>Borrar Plazas</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Botón flotante para añadir parkings, solo visible para admin -->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="isAdmin">
-    <ion-fab-button (click)="addParking()">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="isAdmin" class="fab-dark">
+    <ion-fab-button (click)="addParking()" class="fab-button-dark">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
 </ion-content>

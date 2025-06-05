@@ -1,12 +1,23 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Mapa</ion-title>
+    <ion-title>{{ parking?.nombre || 'Mapa' }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="cerrarModal()">Cerrar</ion-button>
+      <ion-button (click)="cerrarModal()">
+        <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div #mapContainer style="height: 100%; width: 100%;"></div>
+  <div class="map-container">
+    <div #mapContainer style="height: 100%; width: 100%;"></div>
+    
+   
+    
+    <!-- Indicador de carga -->
+    <div class="loading-container" *ngIf="isLoading">
+      <div class="spinner"></div>
+    </div>
+  </div>
 </ion-content>

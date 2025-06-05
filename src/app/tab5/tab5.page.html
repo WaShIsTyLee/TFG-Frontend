@@ -1,57 +1,120 @@
-<ion-header>
-  <ion-title>Taxis Disponibles</ion-title>
+<ion-header class="header-dark">
+  <ion-toolbar>
+    <ion-title>Taxis Disponibles</ion-title>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content class="login-background">
+<ion-content class="dark-background">
+  <div class="taxis-container">
+    <!-- Selector de ciudad -->
+    <ion-item lines="none" class="selector-item">
+      <ion-icon name="location-outline" slot="start" class="field-icon"></ion-icon>
+      <ion-label>Cambiar Ciudad</ion-label>
+      <ion-select [(ngModel)]="ciudadSeleccionada" (ionChange)="onCiudadChange()">
+        <ion-select-option *ngFor="let ciudad of ciudades" [value]="ciudad">{{ ciudad }}</ion-select-option>
+      </ion-select>
+    </ion-item>
 
-  <!-- Selector de ciudad -->
-  <ion-item>
-    <ion-label>Cambiar Ciudad</ion-label>
-    <ion-select [(ngModel)]="ciudadSeleccionada" (ionChange)="onCiudadChange()">
-      <ion-select-option *ngFor="let ciudad of ciudades" [value]="ciudad">{{ ciudad }}</ion-select-option>
-    </ion-select>
-  </ion-item>
+    <!-- Sección Taxis Adaptados -->
+    <div class="section-container">
+      <h2 class="titulo-seccion">
+        <ion-icon name="accessibility-outline" class="section-icon"></ion-icon>
+        Taxis Adaptados
+      </h2>
+      
+      <div *ngIf="taxisAdaptados.length > 0; else sinTaxisAdaptados" class="card-container">
+        <div *ngFor="let taxi of taxisAdaptados" class="taxi-card">
+          <div class="card-header">
+            <div class="taxi-info">
+              <h3 class="taxi-matricula">{{ taxi.matricula }}</h3>
+              <p class="taxi-type">Adaptado</p>
+            </div>
+            <div class="status-badge adapted">
+              <ion-icon name="checkmark-circle-outline"></ion-icon>
+              Adaptado
+            </div>
+          </div>
+          
+          <div class="card-content">
+            <div class="info-row">
+              <ion-icon name="people-outline" class="info-icon"></ion-icon>
+              <span class="info-label">Capacidad:</span>
+              <span class="info-value">{{ taxi.capacidad }}</span>
+            </div>
+            
+            <div class="info-row">
+              <ion-icon name="call-outline" class="info-icon"></ion-icon>
+              <span class="info-label">Teléfono:</span>
+              <span class="info-value">{{ taxi.telefono }}</span>
+            </div>
+          </div>
 
-  <h2 class="titulo-seccion">Taxis Adaptados</h2>
-  <div *ngIf="taxisAdaptados.length > 0; else sinTaxisAdaptados" class="card-grid">
-    <ion-card *ngFor="let taxi of taxisAdaptados" class="reserva-card">
-      <ion-card-header>
-        <ion-card-title>{{ taxi.matricula }}</ion-card-title>
-        <ion-card-subtitle>Adaptado</ion-card-subtitle>
-      </ion-card-header>  
-      <ion-card-content>
-        <p><strong>Capacidad:</strong> {{ taxi.capacidad }}</p>
-        <p><strong>Teléfono:</strong> {{ taxi.telefono }}</p>
-        <ion-button class="btn-ticket" expand="block" (click)="llamarTaxi(taxi.telefono)">Contactar con Whatsapp</ion-button>
-      </ion-card-content>
-    </ion-card>
+          <div class="card-actions">
+            <button class="btn-whatsapp" (click)="llamarTaxi(taxi.telefono)">
+              <ion-icon name="logo-whatsapp"></ion-icon>
+              <span>Contactar con WhatsApp</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #sinTaxisAdaptados>
+        <div class="empty-state">
+          <ion-icon name="accessibility-outline" class="empty-icon"></ion-icon>
+          <p class="empty-text">No hay taxis adaptados disponibles</p>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Sección Taxis No Adaptados -->
+    <div class="section-container">
+      <h2 class="titulo-seccion">
+        <ion-icon name="car-outline" class="section-icon"></ion-icon>
+        Taxis No Adaptados
+      </h2>
+      
+      <div *ngIf="taxisNoAdaptados.length > 0; else sinTaxisNoAdaptados" class="card-container">
+        <div *ngFor="let taxi of taxisNoAdaptados" class="taxi-card">
+          <div class="card-header">
+            <div class="taxi-info">
+              <h3 class="taxi-matricula">{{ taxi.matricula }}</h3>
+              <p class="taxi-type">No Adaptado</p>
+            </div>
+            <div class="status-badge standard">
+              <ion-icon name="car-outline"></ion-icon>
+              Estándar
+            </div>
+          </div>
+          
+          <div class="card-content">
+            <div class="info-row">
+              <ion-icon name="people-outline" class="info-icon"></ion-icon>
+              <span class="info-label">Capacidad:</span>
+              <span class="info-value">{{ taxi.capacidad }}</span>
+            </div>
+            
+            <div class="info-row">
+              <ion-icon name="call-outline" class="info-icon"></ion-icon>
+              <span class="info-label">Teléfono:</span>
+              <span class="info-value">{{ taxi.telefono }}</span>
+            </div>
+          </div>
+
+          <div class="card-actions">
+            <button class="btn-whatsapp" (click)="llamarTaxi(taxi.telefono)">
+              <ion-icon name="logo-whatsapp"></ion-icon>
+              <span>Contactar con WhatsApp</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #sinTaxisNoAdaptados>
+        <div class="empty-state">
+          <ion-icon name="car-outline" class="empty-icon"></ion-icon>
+          <p class="empty-text">No hay taxis no adaptados disponibles</p>
+        </div>
+      </ng-template>
+    </div>
   </div>
-
-  <ng-template #sinTaxisAdaptados>
-    <ion-text color="medium">
-      <p class="ion-padding">No hay taxis adaptados disponibles.</p>
-    </ion-text>
-  </ng-template>
-
-  <h2 class="titulo-seccion">Taxis No Adaptados</h2>
-  <div *ngIf="taxisNoAdaptados.length > 0; else sinTaxisNoAdaptados" class="card-grid">
-    <ion-card *ngFor="let taxi of taxisNoAdaptados" class="reserva-card">
-      <ion-card-header>
-        <ion-card-title>{{ taxi.matricula }}</ion-card-title>
-        <ion-card-subtitle>No Adaptado</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        <p><strong>Capacidad:</strong> {{ taxi.capacidad }}</p>
-        <p><strong>Teléfono:</strong> {{ taxi.telefono }}</p>
-        <ion-button class="btn-ticket" expand="block" (click)="llamarTaxi(taxi.telefono)">Contactar con Whatsapp</ion-button>
-      </ion-card-content>
-    </ion-card>
-  </div>
-
-  <ng-template #sinTaxisNoAdaptados>
-    <ion-text color="medium">
-      <p class="ion-padding">No hay taxis no adaptados disponibles.</p>
-    </ion-text>
-  </ng-template>
-
 </ion-content>

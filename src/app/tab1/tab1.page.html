@@ -1,64 +1,126 @@
-<ion-header>
-  <ion-title>Mis Reservas</ion-title>
+<ion-header class="header-dark">
+  <ion-toolbar>
+    <ion-title>Mis Reservas</ion-title>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content class="login-background">
+<ion-content class="dark-background">
   <!-- Reservas Activas -->
-  <h2 class="titulo-seccion">Reservas Activas</h2>
-  <div *ngIf="reservasActivas.length > 0; else sinReservasActivas" class="card-container">
-    <ion-card *ngFor="let reserva of reservasActivas" class="reserva-card">
-      <ion-card-header>
-        <ion-card-title>Parking: {{ reserva.parking?.nombre }}</ion-card-title>
-        <ion-card-subtitle>Plaza: {{ reserva.plaza?.numeroPlaza }}</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        <p><strong>Matrícula:</strong> {{ reserva.matricula || 'No disponible' }}</p>
-        <p><strong>Entrada:</strong> {{ formatFecha(reserva.diaEntrada) }}</p>
-        <p><strong>Salida:</strong> {{ formatFecha(reserva.diaSalida) }}</p>
+  <div class="section-container">
+    <h2 class="titulo-seccion">
+      <ion-icon name="time-outline" class="section-icon"></ion-icon>
+      Reservas Activas
+    </h2>
+    <div *ngIf="reservasActivas.length > 0; else sinReservasActivas" class="card-container">
+      <div *ngFor="let reserva of reservasActivas" class="reserva-card">
+        <div class="card-header">
+          <div class="parking-info">
+            <h3 class="parking-name">{{ reserva.parking?.nombre }}</h3>
+            <p class="plaza-number">Plaza: {{ reserva.plaza?.numeroPlaza }}</p>
+          </div>
+          <div class="status-badge active">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+            Activa
+          </div>
+        </div>
+        
+        <div class="card-content">
+          <div class="info-row">
+            <ion-icon name="car-outline" class="info-icon"></ion-icon>
+            <span class="info-label">Matrícula:</span>
+            <span class="info-value">{{ reserva.matricula || 'No disponible' }}</span>
+          </div>
+          
+          <div class="info-row">
+            <ion-icon name="enter-outline" class="info-icon"></ion-icon>
+            <span class="info-label">Entrada:</span>
+            <span class="info-value">{{ formatFecha(reserva.diaEntrada) }}</span>
+          </div>
+          
+          <div class="info-row">
+            <ion-icon name="exit-outline" class="info-icon"></ion-icon>
+            <span class="info-label">Salida:</span>
+            <span class="info-value">{{ formatFecha(reserva.diaSalida) }}</span>
+          </div>
+        </div>
 
-        <!-- Botón Mostrar Ticket -->
-        <ion-button expand="block" class="btn-ticket" (click)="mostrarTicket(reserva)">
-          Mostrar Ticket
-        </ion-button>
+        <div class="card-actions">
+          <button class="btn-primary" (click)="mostrarTicket(reserva)">
+            <ion-icon name="ticket-outline"></ion-icon>
+            <span>Ver Ticket</span>
+          </button>
 
-        <!-- Botón Eliminar Reserva -->
-        <ion-button expand="block" class="btn-eliminar" (click)="confirmarEliminar(reserva)">
-          Eliminar Reserva
-        </ion-button>
-      </ion-card-content>
-    </ion-card>
+          <button class="btn-danger" (click)="confirmarEliminar(reserva)">
+            <ion-icon name="trash-outline"></ion-icon>
+            <span>Eliminar</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #sinReservasActivas>
+      <div class="empty-state">
+        <ion-icon name="calendar-outline" class="empty-icon"></ion-icon>
+        <p class="empty-text">No tienes reservas activas</p>
+        <p class="empty-subtext">Cuando realices una reserva aparecerá aquí</p>
+      </div>
+    </ng-template>
   </div>
-
-  <ng-template #sinReservasActivas>
-    <ion-text color="medium">
-      <p class="ion-padding">No tienes reservas activas.</p>
-    </ion-text>
-  </ng-template>
 
   <!-- Reservas Totales -->
-  <h2 class="titulo-seccion">Reservas Totales</h2>
-  <div *ngIf="reservasTotales.length > 0; else sinReservasTotales" class="card-container">
-    <ion-card *ngFor="let reserva of reservasTotales" class="reserva-card">
-      <ion-card-header>
-        <ion-card-title>Parking: {{ reserva.parking?.nombre }}</ion-card-title>
-        <ion-card-subtitle>Plaza: {{ reserva.plaza?.numeroPlaza }}</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        <p><strong>Matrícula:</strong> {{ reserva.matricula || 'No disponible' }}</p>
-        <p><strong>Entrada:</strong> {{ formatFecha(reserva.diaEntrada) }}</p>
-        <p><strong>Salida:</strong> {{ formatFecha(reserva.diaSalida) }}</p>
+  <div class="section-container">
+    <h2 class="titulo-seccion">
+      <ion-icon name="library-outline" class="section-icon"></ion-icon>
+      Historial de Reservas
+    </h2>
+    <div *ngIf="reservasTotales.length > 0; else sinReservasTotales" class="card-container">
+      <div *ngFor="let reserva of reservasTotales" class="reserva-card">
+        <div class="card-header">
+          <div class="parking-info">
+            <h3 class="parking-name">{{ reserva.parking?.nombre }}</h3>
+            <p class="plaza-number">Plaza: {{ reserva.plaza?.numeroPlaza }}</p>
+          </div>
+          <div class="status-badge completed">
+            <ion-icon name="checkmark-done-outline"></ion-icon>
+            Completada
+          </div>
+        </div>
+        
+        <div class="card-content">
+          <div class="info-row">
+            <ion-icon name="car-outline" class="info-icon"></ion-icon>
+            <span class="info-label">Matrícula:</span>
+            <span class="info-value">{{ reserva.matricula || 'No disponible' }}</span>
+          </div>
+          
+          <div class="info-row">
+            <ion-icon name="enter-outline" class="info-icon"></ion-icon>
+            <span class="info-label">Entrada:</span>
+            <span class="info-value">{{ formatFecha(reserva.diaEntrada) }}</span>
+          </div>
+          
+          <div class="info-row">
+            <ion-icon name="exit-outline" class="info-icon"></ion-icon>
+            <span class="info-label">Salida:</span>
+            <span class="info-value">{{ formatFecha(reserva.diaSalida) }}</span>
+          </div>
+        </div>
 
-        <!-- Botón Mostrar Ticket -->
-        <ion-button expand="block" class="btn-ticket" (click)="mostrarTicket(reserva)">
-          Mostrar Ticket
-        </ion-button>
-      </ion-card-content>
-    </ion-card>
+        <div class="card-actions">
+          <button class="btn-secondary" (click)="mostrarTicket(reserva)">
+            <ion-icon name="ticket-outline"></ion-icon>
+            <span>Ver Ticket</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #sinReservasTotales>
+      <div class="empty-state">
+        <ion-icon name="document-outline" class="empty-icon"></ion-icon>
+        <p class="empty-text">No tienes reservas en el historial</p>
+        <p class="empty-subtext">Tus reservas completadas aparecerán aquí</p>
+      </div>
+    </ng-template>
   </div>
-
-  <ng-template #sinReservasTotales>
-    <ion-text color="medium">
-      <p class="ion-padding">No tienes reservas totales.</p>
-    </ion-text>
-  </ng-template>
 </ion-content>

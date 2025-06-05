@@ -8,4 +8,251 @@ ion-content {
   --padding-bottom: 0;
   --padding-start: 0;
   --padding-end: 0;
+  --background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+ion-header {
+  background: rgba(30, 30, 50, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+ion-toolbar {
+  --background: transparent;
+  --color: #f1f5f9;
+  --border-color: transparent;
+  --padding-top: 0.5rem;
+  --padding-bottom: 0.5rem;
+}
+
+ion-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  text-align: center;
+}
+
+ion-button {
+  --color: #94a3b8;
+  --background: rgba(51, 65, 85, 0.6);
+  --background-hover: rgba(71, 85, 105, 0.7);
+  --background-activated: rgba(71, 85, 105, 0.8);
+  --border-radius: 8px;
+  --padding-start: 1rem;
+  --padding-end: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+ion-button:hover {
+  --color: #f1f5f9;
+  --background: rgba(71, 85, 105, 0.7);
+}
+
+.map-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.map-overlay {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+  background: rgba(30, 41, 59, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  padding: 0.8rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.parking-info {
+  color: #f1f5f9;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.parking-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #f1f5f9;
+  margin-top: 0;
+}
+
+.parking-address {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.info-icon {
+  font-size: 1rem;
+  color: #667eea;
+}
+
+.map-controls {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.map-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(30, 41, 59, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f1f5f9;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.map-button:hover {
+  background: rgba(51, 65, 85, 0.9);
+  transform: translateY(-2px);
+}
+
+.map-button:active {
+  transform: translateY(0);
+}
+
+.loading-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.7);
+  z-index: 1001;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top-color: #667eea;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Estilos para personalizar Leaflet */
+:global(.leaflet-popup-content-wrapper) {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+:global(.leaflet-popup-tip) {
+  background-color: #1e293b !important;
+}
+
+:global(.leaflet-popup-close-button) {
+  color: #94a3b8 !important;
+}
+
+:global(.leaflet-control-zoom) {
+  display: none !important; /* Ocultamos los controles por defecto */
+}
+
+:global(.leaflet-control-attribution) {
+  background: rgba(30, 41, 59, 0.8) !important;
+  color: #94a3b8 !important;
+  font-size: 10px !important;
+}
+
+:global(.leaflet-routing-container) {
+  display: none !important; /* Ocultamos el panel de instrucciones */
+}
+
+:global(.leaflet-routing-alt) {
+  display: none !important;
+}
+
+:global(.leaflet-routing-line) {
+  stroke: #667eea !important;
+  stroke-width: 6 !important;
+  stroke-opacity: 0.7 !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .map-overlay {
+    max-width: 90%;
+  }
+  
+  .parking-name {
+    font-size: 1rem;
+  }
+  
+  .parking-address {
+    font-size: 0.8rem;
+  }
+  
+  .info-row {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .map-overlay {
+    top: auto;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 90%;
+  }
+  
+  .map-controls {
+    bottom: auto;
+    top: 1rem;
+  }
+}
+
+/* Estilos para el modo oscuro de Leaflet */
+:global(.leaflet-tile) {
+  filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7) !important;
+}
+
+:global(.leaflet-container) {
+  background: #1a1a2e !important;
 }

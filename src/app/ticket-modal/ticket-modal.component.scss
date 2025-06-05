@@ -1,160 +1,443 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
 
-$topbg: #ffb826;
-$bottombg: #fff;
+// Variables con tema oscuro
+$topbg: #1e293b; // Azul oscuro del tema
+$bottombg: #334155; // Gris azulado oscuro
+$accentColor: #667eea; // Color de acento del tema
 $font: "Open Sans", sans-serif;
-$grey: #6c6c6c;
+$lightText: #f1f5f9;
+$greyText: #94a3b8;
+$darkText: #1e293b;
 
 body, p, h1 {
-	margin: 0;
-	padding: 0;
-	font-family: $font;
-	color: #000;
+  margin: 0;
+  padding: 0;
+  font-family: $font;
+  color: $lightText;
 }
 
 .container {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	background: #e0e2e8;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .ticket {
-	width: 100%;
-	height: 100%;
-	border-radius: 0;
-	box-shadow: none;	
-	overflow: hidden;
-	background: #fff;
-	display: flex;
-	flex-direction: column;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .airline {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .top {
-	flex: 0 0 35%;
-	background: $topbg;
-	position: relative;
-	text-align: center;
-	color: #000;
+  flex: 0 0 auto;
+  background: linear-gradient(135deg, $accentColor 0%, #764ba2 100%);
+  position: relative;
+  text-align: center;
+  color: $lightText;
+  padding: 1rem 0.8rem; // Aumentado padding
+  
+  // Efecto de perforación en la parte inferior
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    right: 0;
+    height: 12px;
+    background: radial-gradient(circle at 8px 6px, transparent 5px, $accentColor 5px),
+                radial-gradient(circle at 24px 6px, transparent 5px, $accentColor 5px),
+                radial-gradient(circle at 40px 6px, transparent 5px, $accentColor 5px),
+                radial-gradient(circle at 56px 6px, transparent 5px, $accentColor 5px),
+                radial-gradient(circle at 72px 6px, transparent 5px, $accentColor 5px);
+    background-size: 16px 12px;
+    background-repeat: repeat-x;
+  }
 
-	h1 {
-		text-transform: uppercase;
-		font-size: 16px;
-		margin-top: 1rem;
-	}
+  h1 {
+    text-transform: uppercase;
+    font-size: 1.1rem; // Aumentado de 0.9rem
+    font-weight: 700;
+    margin-bottom: 0.8rem; // Aumentado
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+  }
 
-	.big {
-		margin-top: 2rem;
-		.from {
-			font-size: 2.2rem;
-			font-weight: 700;
-			color: $topbg;
-			text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-		}
-		.to {
-			margin-top: 0.5rem;
-			font-size: 1.5rem;
-			display: flex;
-			justify-content: center;
-			align-items: center;
+  .big {
+    margin-bottom: 0.8rem; // Aumentado
+    
+    .from {
+      font-size: 1.6rem; // Aumentado de 1.3rem
+      font-weight: 700;
+      color: $lightText;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      margin-bottom: 0.4rem; // Aumentado
+      line-height: 1.1;
+    }
+    
+    .to {
+      font-size: 1.1rem; // Aumentado de 0.9rem
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.9);
+      
+      i {
+        margin: 0 8px; // Aumentado
+        font-size: 1rem; // Aumentado
+      }
+    }
+  }
 
-			i {
-				margin-right: 8px;
-			}
-		}
-	}
+  .top--side {
+    position: absolute;
+    top: 0.8rem; // Aumentado
+    right: 0.8rem; // Aumentado
+    text-align: right;
+    font-size: 0.7rem; // Aumentado de 0.6rem
+    color: rgba(255, 255, 255, 0.8);
 
-	.top--side {
-		position: absolute;
-		top: 1rem;
-		right: 1rem;
-		text-align: right;
-		font-size: 0.8rem;
-
-		ion-icon {
-			font-size: 1.2rem;
-			margin-bottom: 5px;
-		}
-	}
+    ion-icon {
+      font-size: 1.2rem; // Aumentado
+      margin-bottom: 4px; // Aumentado
+      color: $lightText;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+    
+    p {
+      margin: 2px 0; // Aumentado
+      font-weight: 500;
+    }
+  }
 }
 
 .bottom {
-	flex: 1;
-	padding: 1rem;
-	background: $bottombg;
-	color: #000;
+  flex: 1;
+  padding: 1rem 0.8rem 0.8rem 0.8rem; // Aumentado padding
+  background: rgba(51, 65, 85, 0.9);
+  backdrop-filter: blur(10px);
+  color: $lightText;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; // Permitir scroll si es necesario
+}
 
-	.column {
-		display: flex;
-		flex-direction: column;
-		gap: 1.2rem;
-	}
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; // Aumentado de 0.8rem
+  margin-bottom: 0;
+}
 
-	.row {
-		display: flex;
-		justify-content: space-between;
-		gap: 0.5rem;
-		font-size: 0.9rem;
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem; // Aumentado
+  font-size: 0.9rem; // Aumentado de 0.7rem
+  padding: 0.8rem; // Aumentado de 0.5rem
+  background: rgba(30, 41, 59, 0.6);
+  border-radius: 8px; // Aumentado
+  border: 1px solid rgba(255, 255, 255, 0.1);
 
-		p {
-			flex: 1;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			text-align: center;
+  p {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-weight: 500;
+    min-width: 0;
 
-			span {
-				font-size: 0.8rem;
-				color: $grey;
-			}
-		}
-	}
-
-	.bar--code {
-        margin: 2rem auto 0 auto;
-        margin-left: 12rem;
-        height: 50px;
-        width: 90%;
-        position: relative;
-    
-        &::after, &::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            height: 100%;
-            background: #000;
-        }
-    
-        &::after {
-            width: 6px;
-            left: 0;
-            box-shadow: 10px 0 #000, 30px 0 #000, 40px 0 #000, 67px 0 #000, 90px 0 #000,
-                100px 0 #000, 180px 0 #000, 165px 0 #000, 200px 0 #000, 210px 0 #000,
-                135px 0 #000, 120px 0 #000;
-        }
-    
-        &::before {
-            width: 3px;
-            left: 11px;
-            box-shadow: 12px 0 #000, -4px 0 #000, 45px 0 #000, 65px 0 #000, 72px 0 #000,
-                78px 0 #000, 97px 0 #000, 150px 0 #000, 165px 0 #000, 180px 0 #000,
-                135px 0 #000, 120px 0 #000;
-        }
+    span {
+      font-size: 0.8rem; // Aumentado de 0.6rem
+      color: $greyText;
+      text-transform: uppercase;
+      letter-spacing: 0.5px; // Aumentado
+      margin-bottom: 4px; // Aumentado
+      font-weight: 600;
     }
+  }
+}
+
+.qr-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem; // Reducido de 1.2rem para dar más espacio
+  padding: 0.8rem; // Reducido de 1rem
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  border: 3px solid $accentColor;
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+  align-self: center;
+  width: fit-content;
+  flex-shrink: 0; // Evitar que se comprima
+  
+  qrcode {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    
+    canvas {
+      display: block !important;
+      width: 160px !important; // Reducido de 220px para que quepa
+      height: 160px !important; // Reducido de 220px para que quepa
+      max-width: none !important;
+      max-height: none !important;
+    }
+  }
+}
+
+// Ajustes específicos para modales pequeños
+@media (max-height: 600px) {
+  .top {
+    padding: 0.8rem 0.6rem;
+    
+    h1 {
+      font-size: 1rem;
+      margin-bottom: 0.6rem;
+    }
+    
+    .big {
+      margin-bottom: 0.6rem;
+      
+      .from {
+        font-size: 1.4rem;
+        margin-bottom: 0.3rem;
+      }
+      
+      .to {
+        font-size: 1rem;
+      }
+    }
+    
+    .top--side {
+      font-size: 0.65rem;
+      
+      ion-icon {
+        font-size: 1.1rem;
+      }
+    }
+  }
+  
+  .bottom {
+    padding: 0.8rem 0.6rem 0.6rem 0.6rem;
+    
+    .column {
+      gap: 0.8rem;
+    }
+    
+    .row {
+      padding: 0.6rem;
+      font-size: 0.8rem;
+      
+      p span {
+        font-size: 0.7rem;
+      }
+    }
+    
     .qr-container {
-		display: flex;
-		justify-content: center;
-		margin-top: 20px;
-	  }
-	  
+      padding: 0.6rem;
+      margin-top: 0.8rem;
+      
+      qrcode canvas {
+        width: 140px !important; // Más pequeño para pantallas pequeñas
+        height: 140px !important;
+      }
+    }
+  }
+}
+
+// Ajustes para modales muy pequeños
+@media (max-height: 500px) {
+  .container {
+    padding: 0.3rem;
+  }
+  
+  .ticket {
+    border-radius: 8px;
+  }
+  
+  .top {
+    padding: 0.6rem;
+    
+    h1 {
+      font-size: 0.9rem;
+      margin-bottom: 0.4rem;
+    }
+    
+    .big {
+      margin-bottom: 0.4rem;
+      
+      .from {
+        font-size: 1.2rem;
+        margin-bottom: 0.2rem;
+      }
+      
+      .to {
+        font-size: 0.9rem;
+      }
+    }
+    
+    .top--side {
+      top: 0.6rem;
+      right: 0.6rem;
+      font-size: 0.6rem;
+      
+      ion-icon {
+        font-size: 1rem;
+      }
+    }
+  }
+  
+  .bottom {
+    padding: 0.6rem 0.6rem 0.4rem 0.6rem;
+    
+    .column {
+      gap: 0.6rem;
+    }
+    
+    .row {
+      padding: 0.5rem;
+      font-size: 0.75rem;
+      
+      p span {
+        font-size: 0.65rem;
+        margin-bottom: 2px;
+      }
+    }
+    
+    .qr-container {
+      padding: 0.5rem;
+      margin-top: 0.6rem;
+      
+      qrcode canvas {
+        width: 120px !important; // Aún más pequeño para pantallas muy pequeñas
+        height: 120px !important;
+      }
+    }
+  }
+}
+
+// Ajustes para ancho limitado
+@media (max-width: 400px) {
+  .row {
+    flex-direction: column;
+    gap: 0.4rem !important;
+    
+    p {
+      align-items: flex-start !important;
+      text-align: left !important;
+    }
+  }
+  
+  .qr-container {
+    qrcode canvas {
+      width: 150px !important;
+      height: 150px !important;
+    }
+  }
+}
+
+// Animaciones más rápidas para modales
+.row {
+  animation: fadeInUp 0.3s ease-out;
+  animation-fill-mode: both;
+}
+
+.row:nth-child(1) { animation-delay: 0.05s; }
+.row:nth-child(2) { animation-delay: 0.1s; }
+.row:nth-child(3) { animation-delay: 0.15s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.qr-container {
+  animation: fadeIn 0.4s ease-out 0.2s both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Mejoras de accesibilidad
+@media (prefers-reduced-motion: reduce) {
+  .ticket,
+  .row,
+  .qr-container {
+    animation: none;
+  }
+}
+
+// Modo de alto contraste
+@media (prefers-contrast: high) {
+  .ticket {
+    border: 2px solid $lightText;
+  }
+  
+  .bottom .row {
+    border: 1px solid $lightText;
+  }
+}
+
+// Asegurar que el contenido se ajuste al modal
+.container {
+  min-height: 0;
+  min-width: 0;
+}
+
+.ticket {
+  min-height: 0;
+  min-width: 0;
+}
+
+.bottom {
+  min-height: 0;
 }

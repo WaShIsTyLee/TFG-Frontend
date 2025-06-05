@@ -11,7 +11,14 @@
 
         <!-- Sección para iniciar sesión -->
         <section id="section-login" class="section">
-          <div class="image-container"></div> <!-- Contenedor para imagen decorativa -->
+          <div class="image-container">
+            <div class="image-overlay">
+              <div class="welcome-text">
+                <h3>¡Bienvenido de vuelta!</h3>
+                <p>Accede a tu cuenta para gestionar tus espacios de estacionamiento</p>
+              </div>
+            </div>
+          </div>
           <div class="form-container">
             <!-- Título principal -->
             <h1>FlyPark</h1>
@@ -23,34 +30,47 @@
             <!-- Formulario de inicio de sesión -->
             <div class="fondoForm">
               <!-- Campo para correo -->
-              <ion-item>
-                <ion-icon slot="start" name="mail-outline"></ion-icon>
+              <ion-item lines="none">
+                <ion-icon name="mail-outline" slot="start"></ion-icon>
                 <ion-label position="floating">Correo</ion-label>
                 <ion-input [(ngModel)]="username" name="username" type="text" required></ion-input>
               </ion-item>
 
-              <!-- Campo para contraseña con botón para mostrar/ocultar -->
-              <ion-item>
-                <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+              <ion-item lines="none">
+                <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
                 <ion-label position="floating">Contraseña</ion-label>
                 <ion-input [(ngModel)]="password" name="password" [type]="showPassword ? 'text' : 'password'" required></ion-input>
                 <ion-button fill="clear" slot="end" (click)="togglePasswordVisibility()">
                   <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
                 </ion-button>
               </ion-item>
+
+              <div class="forgot-password">
+                <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+              </div>
             </div>
 
             <!-- Botón para enviar formulario de inicio de sesión -->
             <button class="btn-donate" (click)="login()">Iniciar Sesión</button>
 
             <!-- Enlace para cambiar a la sección de registro -->
-            <label for="toggle-register" class="toggle-link">Registrarse</label>
+            <div class="toggle-section">
+              <p>¿No tienes cuenta?</p>
+              <label for="toggle-register" class="toggle-link">Registrarse</label>
+            </div>
           </div>
         </section>
 
         <!-- Sección para registrarse -->
         <section id="section-register" class="section">
-          <div class="image-container"></div> <!-- Contenedor para imagen decorativa -->
+          <div class="image-container">
+            <div class="image-overlay">
+              <div class="welcome-text">
+                <h3>¡Únete a FlyPark!</h3>
+                <p>Crea tu cuenta y comienza a disfrutar de nuestros servicios</p>
+              </div>
+            </div>
+          </div>
           <div class="form-container">
             <!-- Título principal -->
             <h1>FlyPark</h1>
@@ -61,42 +81,42 @@
 
             <!-- Formulario de registro con campos para datos personales -->
             <div class="fondoForm">
-              <ion-item>
-                <ion-icon slot="start" name="person-outline"></ion-icon>
+              <ion-item lines="none">
+                <ion-icon name="person-outline" slot="start"></ion-icon>
                 <ion-label position="floating">Nombre</ion-label>
                 <ion-input [(ngModel)]="nombre" name="nombre" type="text" required></ion-input>
               </ion-item>
 
-              <ion-item>
-                <ion-icon slot="start" name="mail-outline"></ion-icon>
+              <ion-item lines="none">
+                <ion-icon name="mail-outline" slot="start"></ion-icon>
                 <ion-label position="floating">Email</ion-label>
                 <ion-input [(ngModel)]="email" name="email" type="email" required></ion-input>
               </ion-item>
 
-              <ion-item>
-                <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+              <ion-item lines="none">
+                <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
                 <ion-label position="floating">Contraseña</ion-label>
                 <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
               </ion-item>
 
-              <ion-item>
-                <ion-icon slot="start" name="call-outline"></ion-icon>
+              <ion-item lines="none">
+                <ion-icon name="call-outline" slot="start"></ion-icon>
                 <ion-label position="floating">Teléfono</ion-label>
                 <ion-input [(ngModel)]="telefono" name="telefono" type="tel" required></ion-input>
               </ion-item>
 
-              <ion-item>
-                <ion-icon slot="start" name="wallet-outline"></ion-icon>
+              <ion-item lines="none">
+                <ion-icon name="wallet-outline" slot="start"></ion-icon>
                 <ion-label position="floating">Monedero</ion-label>
                 <ion-input [(ngModel)]="monedero" name="monedero" type="number" required></ion-input>
               </ion-item>
             </div>
 
             <!-- Botón para tomar foto y vista previa de la foto tomada -->
-            <div class="foto-container" style="text-align: center; margin: 1rem 0;">
+            <div class="foto-container">
               <button class="btn-donate" (click)="tomarFoto()">Tomar Foto</button>
               <div *ngIf="fotoBase64" style="margin-top: 1rem;">
-                <img [src]="fotoBase64" alt="Foto tomada" style="max-width: 200px; border-radius: 10px;" />
+                <img [src]="fotoBase64" alt="Foto tomada" />
               </div>
             </div>
 
@@ -104,7 +124,10 @@
             <button class="btn-donate" (click)="registrar()">Registrarse</button>
 
             <!-- Enlace para cambiar a la sección de inicio de sesión -->
-            <label for="toggle-login" class="toggle-link">Ya tengo cuenta</label>
+            <div class="toggle-section">
+              <p>¿Ya tienes cuenta?</p>
+              <label for="toggle-login" class="toggle-link">Ya tengo cuenta</label>
+            </div>
           </div>
         </section>
 

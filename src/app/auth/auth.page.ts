@@ -18,8 +18,8 @@ import { UserService } from '../services/user.service';
 export class AuthPage {
   // Variables para controlar el estado de la página (login o registro) y datos del formulario
   isRegistering: boolean = false;
-  username: string = 'admin@admin.com';
-  password: string = 'admin';
+  username: string = '';
+  password: string = '';
   showPassword: boolean = false;
   nombre: string = '';
   email: string = '';

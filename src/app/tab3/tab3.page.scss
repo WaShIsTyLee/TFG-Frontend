@@ -1,120 +1,396 @@
-ion-content {
-   --background: none;
-  background: linear-gradient(to bottom, #c9c2b9, #ffffff); /* De beige a blanco */
+/* Fondo principal con tema oscuro */
+.dark-background {
+  --background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  height: 100%;
+  overflow-y: auto;
 }
 
-ion-header, ion-toolbar {
-  background-color: #000000; /* Negro */
-  --color: white;          /* Dorado */
-  padding: 10px;
+/* Header con tema oscuro ultra compacto */
+.header-dark {
+  background: rgba(30, 30, 50, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  height: 45px;
+}
+
+.header-dark ion-toolbar {
+  --background: transparent;
+  --color: #f1f5f9;
+  --min-height: 45px;
+  --padding-top: 0;
+  --padding-bottom: 0;
+}
+
+.header-dark ion-title {
+  color: #f1f5f9;
+  font-size: 1.1rem;
+  font-weight: 600;
   text-align: center;
+  padding: 0;
 }
 
-ion-title {
-  color: white;            /* Dorado */
-  font-size: 1.8rem;
-  font-weight: bold;
+/* Contenedor principal del perfil */
+.profile-container {
+  padding: 0.8rem;
+  max-width: 500px;
+  margin: 0 auto;
+  height: 100%;
 }
 
-.content-wrapper {
+.profile-wrapper {
+  background: rgba(30, 41, 59, 0.8);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Sección de foto de perfil */
+.profile-photo-section {
+  text-align: center;
+  margin-bottom: 1.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.photo-container {
+  margin-bottom: 0.8rem;
+}
+
+.profile-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(148, 163, 184, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.no-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(51, 65, 85, 0.6);
+  border: 3px solid rgba(148, 163, 184, 0.3);
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-  width: 100%;
-  text-align: center;
-  padding: 20px;
-  background: linear-gradient(to bottom, #333333, #ffffff); /* De gris oscuro a blanco */
-  border-radius: 10px;
-  max-width: 400px;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
 }
 
-ion-item {
-  --background: #c9c2b9; /* Beige */
-  --color: #000000;      /* Negro */
-  border-radius: 5px;
-  width: 85%;
-  max-width: 350px;
-  margin-bottom: 15px;
-  padding: 5px;
+.no-photo-icon {
+  font-size: 2rem;
+  color: #94a3b8;
+  margin-bottom: 0.2rem;
+}
+
+.no-photo-text {
+  font-size: 0.6rem;
+  color: #cbd5e1;
+  margin: 0;
+  text-align: center;
+}
+
+.btn-change-photo {
   display: flex;
   align-items: center;
-}
-
-ion-label {
-  font-size: 1rem;
-  color: #96551d;  /* Dorado oscuro */
-  flex-grow: 1;
-}
-
-ion-input {
-  color: #000000;  /* Negro */
-  font-size: 1rem;
-  padding: 8px;
-  flex-grow: 1;
-}
-
-ion-button {
-  width: 90%;
-  max-width: 350px;
-  font-size: 1rem;
-  margin-top: 8px;
-  --border-radius: 20px;
-}
-
-ion-button::part(native) {
-  border-radius: 30px;
-}
-
-/* Primer botón */
-ion-button:first-of-type {
-  --background: #ffb826; /* Dorado */
-  --color: #000000;      /* Negro */
-}
-
-/* Segundo botón o alternativo */
-ion-button:last-of-type {
-  --background: #550000; /* Dorado oscuro */
-  --color: #ffffff;      /* Blanco */
-}
-
-ion-button ion-icon[slot="start"] {
-  color: #000000;
-  margin-right: 10px;
-}
-
-ion-button ion-icon[slot="end"] {
-  color: #000000;
-  margin-left: 10px;
-}
-
-.login-icon {
-  width: 120px;      /* Tamaño de la imagen */
-  height: 120px;     /* Tamaño de la imagen */
-  border-radius: 50%; /* Hace la imagen circular */
-  object-fit: cover;  /* Asegura que la imagen se recorte de manera correcta */
-  margin-bottom: 10px;
-}
-
-
-p {
-  color: #96551d;           /* Dorado oscuro */
-  font-size: 0.9rem;
-  text-align: right;
-  width: 85%;
-  max-width: 350px;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  border: none;
   cursor: pointer;
-  margin-top: 5px;
+  transition: all 0.3s ease;
+  background: rgba(71, 85, 105, 0.6);
+  color: #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  margin: 0 auto;
 }
 
-.form {
-  padding-top: 60px;
+.btn-change-photo:hover {
+  background: rgba(100, 116, 139, 0.7);
+  color: #f1f5f9;
+}
+
+/* Secciones del formulario */
+.profile-form,
+.wallet-section {
+  margin-bottom: 1.2rem;
+}
+
+.section-title {
+  color: #f1f5f9;
+  font-size: 1rem;
+  font-weight: 600;
   display: flex;
-  justify-content: center;
   align-items: center;
-  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.dark-icon{
-  color: #000000;
+.section-icon {
+  font-size: 1rem;
+  color: #94a3b8;
+}
+
+/* Campos del formulario */
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.profile-item {
+  --background: rgba(51, 65, 85, 0.6);
+  --color: #e2e8f0;
+  --border-radius: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --min-height: 44px;
+  background-color: rgba(51, 65, 85, 0.6) !important;
+  color: #e2e8f0;
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.profile-item:hover {
+  --background: rgba(71, 85, 105, 0.7);
+  border-color: rgba(100, 116, 139, 0.5);
+}
+
+.profile-item.item-has-focus {
+  --background: rgba(71, 85, 105, 0.8);
+  border-color: #64748b;
+}
+
+.field-icon {
+  color: #94a3b8 !important;
+  font-size: 1rem;
+  margin-right: 8px;
+}
+
+.profile-item ion-label {
+  color: #cbd5e1 !important;
+  font-weight: 400;
+  font-size: 0.8rem;
+}
+
+.profile-item ion-input {
+  color: #f1f5f9 !important;
+  font-size: 0.85rem;
+}
+
+/* Sección del monedero */
+.wallet-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.current-balance {
+  background: rgba(15, 23, 42, 0.6);
+  padding: 0.8rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.balance-label {
+  color: #cbd5e1;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.balance-amount {
+  color: #4ade80;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.btn-add-funds {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.btn-add-funds:hover {
+  background: rgba(34, 197, 94, 0.3);
+  color: #6ee7b7;
+}
+
+/* Botones de acción */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-save,
+.btn-logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.btn-save {
+  background: linear-gradient(135deg, #374151 0%, #4b5563 50%, #374151 100%);
+  color: #f1f5f9;
+  border: 1px solid rgba(107, 114, 128, 0.3);
+}
+
+.btn-save:hover {
+  background: linear-gradient(135deg, #4b5563 0%, #6b7280 50%, #4b5563 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-logout {
+  background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 50%, #7f1d1d 100%);
+  color: #fecaca;
+  border: 1px solid rgba(153, 27, 27, 0.3);
+}
+
+.btn-logout:hover {
+  background: linear-gradient(135deg, #991b1b 0%, #b91c1c 50%, #991b1b 100%);
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(127, 29, 29, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 0.5rem;
+  }
+
+  .profile-wrapper {
+    padding: 0.8rem;
+  }
+
+  .section-title {
+    font-size: 0.9rem;
+  }
+
+  .profile-photo,
+  .no-photo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .no-photo-icon {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 0.3rem;
+  }
+
+  .profile-wrapper {
+    padding: 0.6rem;
+  }
+
+  .section-title {
+    font-size: 0.85rem;
+  }
+
+  .profile-photo,
+  .no-photo {
+    width: 60px;
+    height: 60px;
+  }
+
+  .current-balance {
+    flex-direction: column;
+    gap: 0.3rem;
+    text-align: center;
+  }
+}
+
+/* Optimización para pantallas de altura limitada */
+@media (max-height: 700px) {
+  .profile-wrapper {
+    padding: 0.8rem;
+  }
+
+  .profile-photo-section {
+    margin-bottom: 0.8rem;
+  }
+
+  .profile-form,
+  .wallet-section {
+    margin-bottom: 0.8rem;
+  }
+
+  .profile-photo,
+  .no-photo {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* Scrollbar personalizado */
+ion-content::-webkit-scrollbar {
+  width: 3px;
+}
+
+ion-content::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.5);
+}
+
+ion-content::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 1.5px;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-wrapper {
+  animation: fadeIn 0.4s ease forwards;
 }

@@ -1,13 +1,14 @@
 <div class="container">
-
   <div class="ticket airline">
     <div class="top">
       <h1>Ticket Parking</h1>
 
-
       <div class="big">
         <p class="from">{{ reserva?.parking?.nombre || 'Parking' }}</p>
-        <p class="to"><i class="fas fa-arrow-right"></i> {{ reserva?.plaza?.numeroPlaza || 'Plaza' }}</p>
+        <p class="to">
+          <i class="fas fa-arrow-right"></i> 
+          Plaza {{ reserva?.plaza?.numeroPlaza || 'N/A' }}
+        </p>
       </div>
 
       <div class="top--side">
@@ -20,35 +21,56 @@
     <div class="bottom">
       <div class="column">
         <div class="row row-1">
-          <p><span>Parking</span> {{ reserva?.parking?.nombre }}</p>
-          <p class="row--right"><span>Plaza</span> {{ reserva?.plaza?.numeroPlaza }}</p>
+          <p>
+            <span>Parking</span> 
+            {{ reserva?.parking?.nombre || 'No disponible' }}
+          </p>
+          <p class="row--right">
+            <span>Plaza</span> 
+            {{ reserva?.plaza?.numeroPlaza || 'N/A' }}
+          </p>
         </div>
 
         <div class="row row-2">
-          <p><span>Entrada</span> {{ reserva?.diaEntrada | date:'short' }}</p>
-          <p class="row--center"><span>Salida</span> {{ reserva?.diaSalida | date:'short' }}</p>
-          <p class="row--right"><span>Duración</span> {{ duracionHoras || 'No disponible' }}</p>
+          <p>
+            <span>Entrada</span> 
+            {{ reserva?.diaEntrada | date:'short' }}
+          </p>
+          <p class="row--center">
+            <span>Salida</span> 
+            {{ reserva?.diaSalida | date:'short' }}
+          </p>
+          <p class="row--right">
+            <span>Duración</span> 
+            {{ duracionHoras || 'N/A' }}
+          </p>
         </div>
 
         <div class="row row-3">
-          <p><span>Matrícula</span> {{ reserva?.matricula || 'No disponible' }}</p>
+          <p>
+            <span>Matrícula</span> 
+            {{ reserva?.matricula || 'No disponible' }}
+          </p>
           <p class="row--center">
-            <span>Usuario</span> {{ usuarioActual?.name || 'Cliente' }}
+            <span>Usuario</span> 
+            {{ usuarioActual?.name || 'Cliente' }}
           </p>
           <p class="row--right">
-            <span>Precio</span> {{ reserva?.precio ? reserva.precio + ' €' : 'No disponible' }}
+            <span>Precio</span> 
+            {{ reserva?.precio ? reserva.precio + ' €' : 'N/A' }}
           </p>
         </div>
-
-
       </div>
 
       <div class="qr-container" *ngIf="qrData">
-        <qrcode [qrdata]="qrData" [width]="200" [errorCorrectionLevel]="'M'">
+        <qrcode 
+          [qrdata]="qrData" 
+          [width]="160" 
+          [errorCorrectionLevel]="'M'"
+          [colorDark]="'#1e293b'"
+          [colorLight]="'#ffffff'">
         </qrcode>
       </div>
-      <div></div>
     </div>
   </div>
-
 </div>
